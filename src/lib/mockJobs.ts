@@ -1,0 +1,67 @@
+﻿import { Job } from "@/types/job";
+
+export const mockJobs: Job[] = [
+    {
+        id: "techcorp-frontend",
+        title: "Senior Frontend Developer",
+        company: "TechCorp Global",
+        location: "Bangalore",
+        salary: "INR 18L - INR 25L",
+        type: "Full-time",
+        verified: true,
+    },
+    {
+        id: "saas-product",
+        title: "Product Strategy Lead",
+        company: "SaaS Solutions",
+        location: "Remote (India)",
+        salary: "INR 22L - INR 30L",
+        type: "Permanent",
+        verified: false,
+    },
+    {
+        id: "fintech-backend",
+        title: "Backend Engineer (Go/Rust)",
+        company: "FinTech Innovations",
+        location: "Mumbai",
+        salary: "INR 25L - INR 35L",
+        type: "Full-time",
+        verified: true,
+    },
+    {
+        id: "edtech-ux",
+        title: "Lead UX Designer",
+        company: "BrightMind EdTech",
+        location: "Gurgaon",
+        salary: "INR 20L - INR 28L",
+        type: "Full-time",
+        verified: true,
+    },
+    {
+        id: "health-data",
+        title: "Data Scientist",
+        company: "HealthAI Systems",
+        location: "Hyderabad",
+        salary: "INR 15L - INR 22L",
+        type: "Contract",
+        verified: false,
+    },
+    {
+        id: "retail-manager",
+        title: "Product Manager",
+        company: "ShopEasy Retail",
+        location: "Pune",
+        salary: "INR 18L - INR 24L",
+        type: "Full-time",
+        verified: true,
+    },
+    {
+        id: "startup-fullstack",
+        title: "Full Stack Developer (MERN)",
+        company: "NextGen Startup",
+        location: "Remote (Bangalore)",
+        salary: "INR 12L - INR 18L",
+        type: "Full-time",
+        verified: false,
+    }
+];

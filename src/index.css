@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-slate-800 dark:text-slate-100 bg-background-light dark:bg-background-dark transition-colors duration-500 overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .glass-morphism {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-white/20 dark:border-slate-800/50 shadow-glass;
+  }
+  .glass-card {
+    @apply bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg border border-white/40 dark:border-slate-700/50 shadow-glass rounded-2xl;
+  }
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Dual-handle salary range slider */
+input[type='range'].appearance-none::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6366f1;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.4);
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+input[type='range'].appearance-none::-webkit-slider-thumb:hover {
+  background: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.2);
+}
+input[type='range'].appearance-none::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6366f1;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.4);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+input[type='range'].appearance-none::-webkit-slider-runnable-track {
+  background: transparent;
+}
+input[type='range'].appearance-none::-moz-range-track {
+  background: transparent;
+}
