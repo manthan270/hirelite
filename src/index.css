@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply antialiased text-slate-800 dark:text-slate-100 bg-background-light dark:bg-background-dark transition-colors duration-500 overflow-x-hidden;
+    @apply antialiased text-slate-800 dark:text-slate-100 bg-background-light dark:bg-background-dark transition-colors duration-500;
+  }
+  #root {
+    @apply overflow-x-hidden;
   }
 }
 
