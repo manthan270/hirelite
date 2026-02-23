@@ -59,14 +59,9 @@ export default function Login() {
                     </div>
 
                     <div>
-                        <div className="flex justify-between items-center mb-1.5">
-                            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="password">
-                                Password
-                            </label>
-                            <Link to="/contact" className="text-xs text-primary font-medium hover:underline">
-                                Forgot password?
-                            </Link>
-                        </div>
+                        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5" htmlFor="password">
+                            Password
+                        </label>
                         <Input
                             id="password"
                             type={showPassword ? 'text' : 'password'}
@@ -85,6 +80,11 @@ export default function Login() {
                                 </button>
                             }
                         />
+                        <div className="flex justify-end mt-2">
+                            <Link to="/contact" className="text-xs text-primary font-medium hover:underline">
+                                Forgot password?
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-2">
