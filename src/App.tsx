@@ -6,6 +6,8 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Home } from '@/pages/Home';
 import { Jobs } from '@/pages/candidate/Jobs';
 import { JobDetail } from '@/pages/candidate/JobDetail';
+import ResumeAnalyzer from '@/pages/candidate/ResumeAnalyzer';
+import CompanyProfile from '@/pages/jobs/CompanyProfile';
 import Login from '@/pages/auth/Login';
 import Register from '@/pages/auth/Register';
 import CandidateDashboard from '@/pages/dashboard/CandidateDashboard';
@@ -39,6 +41,7 @@ function AppContent() {
                     <Route path="/" element={<Home />} />
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/jobs/:id" element={<JobDetail />} />
+                    <Route path="/company/:id" element={<CompanyProfile />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/coming-soon" element={<ComingSoon />} />
@@ -52,6 +55,7 @@ function AppContent() {
                     <Route element={<DashboardLayout />}>
                         <Route path="/dashboard/candidate" element={<CandidateDashboard />} />
                         <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+                        <Route path="/dashboard/resume-analyzer" element={<ResumeAnalyzer />} />
                         {/* Placeholder for nested dashboard routes */}
                         <Route path="/dashboard/candidate/*" element={<div className="text-slate-500 p-8">Section Coming Soon</div>} />
                         <Route path="/dashboard/employer/*" element={<div className="text-slate-500 p-8">Section Coming Soon</div>} />

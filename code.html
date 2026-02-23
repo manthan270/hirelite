@@ -431,6 +431,12 @@
                     <a onclick="navigateTo('jobs')"
                         class="nav-link px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-primary/5 rounded-md transition-all cursor-pointer"
                         data-page="jobs">Find Jobs</a>
+                    <a onclick="navigateTo('salary-insights')"
+                        class="nav-link px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-primary/5 rounded-md transition-all cursor-pointer"
+                        data-page="salary-insights">Salaries</a>
+                    <a onclick="navigateTo('company-profile')"
+                        class="nav-link px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-primary/5 rounded-md transition-all cursor-pointer"
+                        data-page="company-profile">Companies</a>
                     <a onclick="navigateTo('candidate-dashboard')"
                         class="nav-link px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-primary hover:bg-primary/5 rounded-md transition-all cursor-pointer"
                         data-page="candidate-dashboard">My Dashboard</a>
@@ -468,6 +474,12 @@
                 <a onclick="navigateTo('jobs'); toggleMobileMenu()"
                     class="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-primary/5 hover:text-primary rounded-md cursor-pointer"
                     role="menuitem">Find Jobs</a>
+                <a onclick="navigateTo('salary-insights'); toggleMobileMenu()"
+                    class="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-primary/5 hover:text-primary rounded-md cursor-pointer"
+                    role="menuitem">Salaries</a>
+                <a onclick="navigateTo('company-profile'); toggleMobileMenu()"
+                    class="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-primary/5 hover:text-primary rounded-md cursor-pointer"
+                    role="menuitem">Companies</a>
                 <a onclick="navigateTo('candidate-dashboard'); toggleMobileMenu()"
                     class="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-primary/5 hover:text-primary rounded-md cursor-pointer"
                     role="menuitem">My Dashboard</a>
@@ -1873,6 +1885,14 @@
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     1 offer awaiting review
                 </div>
+                <button onclick="navigateTo('resume-analyzer')"
+                    class="hidden md:inline-flex items-center gap-2 bg-white text-primary border border-primary px-4 py-2 rounded-xl text-sm font-bold shadow-sm hover:bg-primary/5 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <span class="material-symbols-outlined text-[16px]">document_scanner</span> ATS Scanner
+                </button>
+                <button onclick="navigateTo('messages')"
+                    class="hidden md:inline-flex items-center gap-2 bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-50 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <span class="material-symbols-outlined text-[16px]">chat</span> Chat
+                </button>
                 <button onclick="navigateTo('jobs')"
                     class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-primary/25 hover:bg-primary-dark transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     <span class="material-symbols-outlined text-[16px]">search</span> Find Jobs
@@ -1950,7 +1970,8 @@
                     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <h2 class="text-sm font-bold text-slate-900">Application Pipeline</h2>
-                            <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded-full">4
+                            <span id="hf-active-apps-badge"
+                                class="bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded-full">4
                                 Active</span>
                         </div>
                         <div class="flex gap-1 p-1 bg-slate-100 rounded-lg" role="tablist"
@@ -1971,136 +1992,7 @@
                     </div>
                     <!-- Application rows -->
                     <div id="hf-applications-list" class="divide-y divide-slate-50">
-                        <!-- TechFlow Row -->
-                        <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/60 transition-colors group app-card"
-                            data-status="interview">
-                            <div class="flex items-center gap-3 flex-1 min-w-0">
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 font-black text-xs shrink-0 shadow-sm">
-                                    GO</div>
-                                <div class="min-w-0">
-                                    <p class="text-sm font-bold text-slate-900 truncate">Senior Product Designer</p>
-                                    <p class="text-xs text-slate-400">Google · Applied Dec 8</p>
-                                </div>
-                            </div>
-                            <div class="flex-1 sm:max-w-[220px]">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-xs font-semibold text-primary">Interviewing</span>
-                                    <span class="text-[10px] text-slate-400 font-medium">Stage 3 / 5</span>
-                                </div>
-                                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                    <div
-                                        class="h-full w-[60%] bg-gradient-to-r from-primary to-blue-400 rounded-full progress-bar-striped">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hidden md:flex items-center gap-2 text-xs text-slate-600 min-w-[140px]">
-                                <span class="flex w-2 h-2 shrink-0"><span
-                                        class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-orange-400 opacity-75"></span><span
-                                        class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span></span>
-                                <span class="font-medium">Final Presentation <span class="text-slate-400 font-normal">·
-                                        In 2 days</span></span>
-                            </div>
-                            <div class="shrink-0">
-                                <button onclick="navigateTo('interview-scheduler')"
-                                    class="text-xs font-bold bg-primary/5 hover:bg-primary text-primary hover:text-white border border-primary/20 hover:border-primary px-3.5 py-1.5 rounded-lg transition-all">Prepare</button>
-                            </div>
-                        </div>
-                        <!-- Nexus Row -->
-                        <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/60 transition-colors group app-card"
-                            data-status="offer">
-                            <div class="flex items-center gap-3 flex-1 min-w-0">
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-black text-xs shrink-0 shadow-sm">
-                                    AM</div>
-                                <div class="min-w-0">
-                                    <p class="text-sm font-bold text-slate-900 truncate">UX Researcher</p>
-                                    <p class="text-xs text-slate-400">Amazon · Applied Nov 22</p>
-                                </div>
-                            </div>
-                            <div class="flex-1 sm:max-w-[220px]">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-xs font-semibold text-emerald-600">Offer Received 🎉</span>
-                                    <span class="text-[10px] text-slate-400 font-medium">Final</span>
-                                </div>
-                                <div class="w-full h-2 bg-emerald-100 rounded-full overflow-hidden">
-                                    <div
-                                        class="h-full w-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hidden md:block min-w-[140px]">
-                                <p class="text-xs font-semibold text-red-500">⏳ Expires in 24h</p>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Review compensation terms</p>
-                            </div>
-                            <div class="shrink-0">
-                                <button data-action="review-offer"
-                                    class="text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-3.5 py-1.5 rounded-lg transition-all shadow-sm shadow-emerald-200">Review
-                                    Offer</button>
-                            </div>
-                        </div>
-                        <!-- Acme Row -->
-                        <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/60 transition-colors group app-card"
-                            data-status="active">
-                            <div class="flex items-center gap-3 flex-1 min-w-0">
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs shrink-0 shadow-sm">
-                                    AP</div>
-                                <div class="min-w-0">
-                                    <p class="text-sm font-bold text-slate-900 truncate">Frontend Developer</p>
-                                    <p class="text-xs text-slate-400">Apple · Applied Dec 1</p>
-                                </div>
-                            </div>
-                            <div class="flex-1 sm:max-w-[220px]">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-xs font-medium text-slate-500">Screening</span>
-                                    <span class="text-[10px] text-slate-400 font-medium">Stage 1 / 5</span>
-                                </div>
-                                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[20%] bg-slate-300 rounded-full"></div>
-                                </div>
-                            </div>
-                            <div class="hidden md:block min-w-[140px]">
-                                <p class="text-xs text-slate-400 font-medium">Awaiting feedback</p>
-                            </div>
-                            <div class="shrink-0">
-                                <span class="text-[10px] text-slate-400 italic">No action needed</span>
-                            </div>
-                        </div>
-                        <!-- Slack Row -->
-                        <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/60 transition-colors group app-card"
-                            data-status="active">
-                            <div class="flex items-center gap-3 flex-1 min-w-0">
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0 shadow-sm">
-                                    <span class="material-icons text-[20px]">chat</span>
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-sm font-bold text-slate-900 truncate">Senior PM</p>
-                                    <p class="text-xs text-slate-400">Slack · Applied Dec 10</p>
-                                </div>
-                            </div>
-                            <div class="flex-1 sm:max-w-[220px]">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-xs font-medium text-amber-600">Under Review</span>
-                                    <span class="text-[10px] text-slate-400 font-medium">Stage 2 / 5</span>
-                                </div>
-                                <div class="w-full h-2 bg-amber-50 rounded-full overflow-hidden">
-                                    <div
-                                        class="h-full w-[40%] bg-gradient-to-r from-amber-300 to-amber-500 rounded-full">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hidden md:block min-w-[140px]">
-                                <p class="text-xs font-medium text-slate-500">Technical assessment</p>
-                                <p class="text-[10px] text-slate-400 mt-0.5">Due in 5 days</p>
-                            </div>
-                            <div class="shrink-0">
-                                <button
-                                    class="text-xs font-bold text-amber-600 border border-amber-200 bg-amber-50 hover:bg-amber-100 px-3.5 py-1.5 rounded-lg transition-all">Start
-                                    Test</button>
-                            </div>
-                        </div>
+                        <!-- Dynamic applications will be rendered here -->
                     </div>
                     <!-- Empty state (hidden) -->
                     <div id="hf-app-empty" class="hidden py-12 text-center">
@@ -2212,49 +2104,8 @@
                         <button onclick="navigateTo('jobs')"
                             class="text-xs font-semibold text-primary hover:underline">Browse more</button>
                     </div>
-                    <div class="divide-y divide-slate-50">
-                        <div class="px-5 py-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors cursor-pointer group"
-                            onclick="openJob('stripe-ui')">
-                            <div class="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                                <span class="material-icons text-indigo-600 text-[18px]">payments</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p
-                                    class="text-xs font-bold text-slate-900 truncate group-hover:text-primary transition-colors">
-                                    Staff UI Systems Designer</p>
-                                <p class="text-[10px] text-slate-400">Stripe · Remote · $180k–$240k</p>
-                            </div>
-                            <span
-                                class="material-symbols-outlined text-slate-300 group-hover:text-primary text-[18px] transition-colors">arrow_forward_ios</span>
-                        </div>
-                        <div class="px-5 py-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors cursor-pointer group"
-                            onclick="openJob('linear-product')">
-                            <div class="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center shrink-0">
-                                <span class="material-icons text-violet-600 text-[18px]">line_axis</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p
-                                    class="text-xs font-bold text-slate-900 truncate group-hover:text-primary transition-colors">
-                                    Product Lead</p>
-                                <p class="text-[10px] text-slate-400">Linear · NYC/SF · $180k–$240k</p>
-                            </div>
-                            <span
-                                class="material-symbols-outlined text-slate-300 group-hover:text-primary text-[18px] transition-colors">arrow_forward_ios</span>
-                        </div>
-                        <div class="px-5 py-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors cursor-pointer group"
-                            onclick="openJob('netflix-data')">
-                            <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
-                                <span class="material-icons text-red-600 text-[18px]">movie</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p
-                                    class="text-xs font-bold text-slate-900 truncate group-hover:text-primary transition-colors">
-                                    Senior Data Scientist</p>
-                                <p class="text-[10px] text-slate-400">Netflix · Los Gatos · $200k–$350k</p>
-                            </div>
-                            <span
-                                class="material-symbols-outlined text-slate-300 group-hover:text-primary text-[18px] transition-colors">arrow_forward_ios</span>
-                        </div>
+                    <div id="hf-saved-jobs-list" class="divide-y divide-slate-50">
+                        <!-- Dynamic saved jobs will be rendered here -->
                     </div>
                 </div>
 
@@ -2313,172 +2164,28 @@
     </div>
 
     <!-- ========== PAGE: INTERVIEW SCHEDULER ========== -->
+    <!-- ========== PAGE: INTERVIEW SCHEDULER (DEPRECATED -> CALENDLY) ========== -->
     <div id="page-interview-scheduler" class="page-section flex-grow">
-        <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
+        <main class="container mx-auto px-4 py-16 max-w-4xl text-center">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-12">
                 <div
-                    class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                    A</div>
-                <span class="font-semibold text-lg tracking-tight">Apple</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="text-sm text-slate-500 hidden sm:block">Step 2 of 3</div>
-                <div class="h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
-                    <div class="h-full w-2/3 bg-primary rounded-full"></div>
+                    class="w-20 h-20 bg-blue-50 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-4xl">calendar_month</span>
                 </div>
-            </div>
-        </div>
-        <main class="container mx-auto px-4 pt-0 pb-8 max-w-6xl">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div class="lg:col-span-8 space-y-8">
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8">
-                        <h1 class="text-3xl font-bold text-slate-900 mb-2">Schedule your interview with Apple</h1>
-                        <p class="text-lg text-slate-500 font-light">Pick a time that works for you. We're looking
-                            forward to meeting.</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <div class="flex items-center gap-4">
-                                <h2 id="hf-calendar-month" class="text-xl font-semibold text-slate-800">February 2026
-                                </h2>
-                                <div class="flex gap-1">
-                                    <button data-action="calendar-prev"
-                                        class="p-1 hover:bg-slate-100 rounded text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-                                        aria-label="Previous month"><span
-                                            class="material-icons text-xl">chevron_left</span></button>
-                                    <button data-action="calendar-next"
-                                        class="p-1 hover:bg-slate-100 rounded text-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-                                        aria-label="Next month"><span
-                                            class="material-icons text-xl">chevron_right</span></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="flex flex-col gap-4">
-                                <div class="text-center border-b border-slate-100 pb-3"><span
-                                        class="block text-sm font-medium text-slate-500 uppercase tracking-wider">Mon</span><span
-                                        class="block text-2xl font-bold text-slate-900">Feb 16</span></div>
-                                <div class="space-y-3">
-                                    <button data-action="select-slot" data-slot="Mon, Feb 16 • 9:00 AM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">9:00
-                                        AM</button>
-                                    <button data-action="select-slot" data-slot="Mon, Feb 16 • 11:30 AM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">11:30
-                                        AM</button>
-                                    <button data-action="select-slot" data-slot="Mon, Feb 16 • 2:00 PM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 bg-primary text-white rounded-lg text-sm font-medium shadow-md shadow-primary/20 ring-2 ring-primary ring-offset-2 ring-offset-white transition-all">2:00
-                                        PM</button>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-4">
-                                <div class="text-center border-b border-slate-100 pb-3"><span
-                                        class="block text-sm font-medium text-slate-500 uppercase tracking-wider">Tue</span><span
-                                        class="block text-2xl font-bold text-slate-900">Feb 17</span></div>
-                                <div class="space-y-3">
-                                    <button data-action="select-slot" data-slot="Tue, Feb 17 • 10:00 AM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">10:00
-                                        AM</button>
-                                    <button data-action="select-slot" data-slot="Tue, Feb 17 • 1:00 PM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">1:00
-                                        PM</button>
-                                    <button data-action="select-slot" data-slot="Tue, Feb 17 • 3:30 PM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">3:30
-                                        PM</button>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-4">
-                                <div class="text-center border-b border-slate-100 pb-3"><span
-                                        class="block text-sm font-medium text-slate-500 uppercase tracking-wider">Wed</span><span
-                                        class="block text-2xl font-bold text-slate-900">Feb 18</span></div>
-                                <div class="space-y-3">
-                                    <button data-action="select-slot" data-slot="Wed, Feb 18 • 9:30 AM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">9:30
-                                        AM</button>
-                                    <button data-action="select-slot" data-slot="Wed, Feb 18 • 1:00 PM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">1:00
-                                        PM</button>
-                                    <button data-action="select-slot" data-slot="Wed, Feb 18 • 4:00 PM (EST)"
-                                        class="hf-slot-btn w-full py-3 px-4 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary">4:00
-                                        PM</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-4 space-y-6">
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 sticky top-20">
-                        <h3 class="text-lg font-semibold text-slate-900 mb-6 border-b border-slate-100 pb-4">Meeting
-                            Details</h3>
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-start gap-3">
-                                <div class="p-2 rounded-lg bg-primary/10 text-primary"><span
-                                        class="material-icons text-xl">videocam</span></div>
-                                <div>
-                                    <div class="font-medium text-slate-900">Initial Screen</div>
-                                    <div class="text-sm text-slate-500">Video Call via Zoom</div>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="p-2 rounded-lg bg-primary/10 text-primary"><span
-                                        class="material-icons text-xl">schedule</span></div>
-                                <div>
-                                    <div class="font-medium text-slate-900">30 Minutes</div>
-                                    <div class="text-sm text-slate-500">Duration</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-4 border-t border-slate-100">
-                            <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Interviewing
-                                with</div>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
-                                        JD</div>
-                                    <div>
-                                        <div class="text-sm font-medium text-slate-900">Jane Doe</div>
-                                        <div class="text-xs text-slate-500">VP of Product</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
-                                        MS</div>
-                                    <div>
-                                        <div class="text-sm font-medium text-slate-900">Mark Smith</div>
-                                        <div class="text-xs text-slate-500">Lead Product Designer</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-6 border-t border-slate-100">
-                            <div class="bg-primary/5 rounded-lg p-4 border border-primary/10">
-                                <div class="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Selected
-                                    Time</div>
-                                <div id="hf-selected-slot" class="font-bold text-slate-900">Mon, Feb 16 • 2:00 PM</div>
-                                <div id="hf-selected-tz" class="text-xs text-slate-500 mt-1">Eastern Standard Time (EST)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h1 class="text-3xl font-bold text-slate-900 mb-4">Interview Scheduling</h1>
+                <p class="text-lg text-slate-500 mb-8 max-w-2xl mx-auto">This integrated scheduling experience has been
+                    deprecated in favor of a robust Calendly integration. Candidates will be redirected to the
+                    employer's unified calendar link.</p>
+                <div
+                    class="border border-slate-200 rounded-xl p-6 bg-slate-50 flex flex-col items-center justify-center min-h-[300px]">
+                    <span class="material-symbols-outlined text-slate-300 text-5xl mb-4">date_range</span>
+                    <p class="text-slate-500 font-medium mb-4">Calendly API Integration Placeholder</p>
+                    <button onclick="showToast('Redirecting to Calendly...', {type: 'success'})"
+                        class="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition shadow-md">Open
+                        Scheduling Portal</button>
                 </div>
             </div>
         </main>
-        <footer
-            class="sticky bottom-0 z-10 w-full bg-white border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4">
-            <div class="max-w-6xl mx-auto flex items-center justify-between">
-                <button data-action="need-another-time"
-                    class="text-sm text-slate-500 hover:text-primary cursor-pointer underline decoration-slate-300 underline-offset-4">Need
-                    another time?</button>
-                <div class="flex gap-3">
-                    <button onclick="navigateTo('candidate-dashboard')"
-                        class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors">Back</button>
-                    <button data-action="confirm-slot"
-                        class="px-8 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-white font-medium shadow-lg shadow-primary/30 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Confirm
-                        Selection</button>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <!-- ========== PAGE: EMPLOYER DASHBOARD ========== -->
@@ -2509,6 +2216,16 @@
                         class="employer-nav-link flex items-center gap-3 px-2 py-2 lg:px-3 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-all cursor-pointer">
                         <span class="material-symbols-outlined text-[20px] shrink-0">add_circle</span>
                         <span class="hidden lg:block text-sm">Post a Job</span>
+                    </a>
+                    <a onclick="navigateTo('messages')"
+                        class="employer-nav-link flex items-center gap-3 px-2 py-2 lg:px-3 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-[20px] shrink-0">chat</span>
+                        <span class="hidden lg:block text-sm">Messages</span>
+                    </a>
+                    <a onclick="navigateTo('company-profile')"
+                        class="employer-nav-link flex items-center gap-3 px-2 py-2 lg:px-3 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-[20px] shrink-0">business</span>
+                        <span class="hidden lg:block text-sm">Brand Profile</span>
                     </a>
                     <a data-action="employer-section" data-section="Candidates"
                         class="employer-nav-link flex items-center gap-3 px-2 py-2 lg:px-3 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition-all cursor-pointer">
@@ -3213,6 +2930,258 @@
         </div>
     </footer>
 
+    </footer>
+
+    <!-- ========== PAGE: RESUME ANALYZER ========== -->
+    <div id="page-resume-analyzer" class="page-section flex-grow">
+        <main class="container mx-auto px-4 py-16 max-w-4xl text-center">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-12">
+                <div
+                    class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-4xl">document_scanner</span>
+                </div>
+                <h1 class="text-3xl font-bold text-slate-900 mb-4">AI Resume & ATS Analyzer</h1>
+                <p class="text-lg text-slate-500 mb-8 max-w-2xl mx-auto">Get intelligent insights on how well your
+                    resume matches target roles. Our AI simulates real enterprise Applicant Tracking Systems to maximize
+                    your chances.</p>
+                <div class="border-2 border-dashed border-slate-300 rounded-xl p-10 bg-slate-50 cursor-pointer hover:bg-slate-100 transition"
+                    onclick="showToast('Uploading and parsing resume securely...', {type: 'info'})">
+                    <span class="material-symbols-outlined text-slate-400 text-3xl mb-2">upload_file</span>
+                    <p class="font-medium text-slate-700">Drag & Drop your resume (PDF, DOCX)</p>
+                    <p class="text-sm text-slate-400 mt-1">or click to browse files</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== PAGE: COMPANY PROFILE ========== -->
+    <div id="page-company-profile" class="page-section flex-grow bg-slate-50">
+        <!-- Company Banner -->
+        <div class="bg-navy h-64 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-indigo-900 opacity-90"></div>
+            <div class="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div>
+        </div>
+        <main class="container mx-auto px-4 pb-16 max-w-5xl -mt-20 relative z-10">
+            <div
+                class="bg-white rounded-2xl shadow-md border border-slate-200 p-8 mb-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
+                <div
+                    class="w-32 h-32 bg-white rounded-xl border-4 border-white shadow-lg flex items-center justify-center shrink-0 -mt-16 overflow-hidden">
+                    <div class="w-full h-full bg-slate-900 flex items-center justify-center"><span
+                            class="text-white font-black text-4xl">T</span></div>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-4 mb-2">
+                        <div>
+                            <h1 class="text-3xl font-bold text-slate-900">TechCorp Global</h1>
+                            <p class="text-slate-500 font-medium">Enterprise Software • Austin, TX • 5,000+ Employees
+                            </p>
+                        </div>
+                        <button
+                            class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition shadow-sm"
+                            onclick="showToast('You are now following TechCorp Global', {type: 'success'})">Follow
+                            Company</button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">About Us</h2>
+                        <p class="text-slate-600 leading-relaxed">TechCorp Global is building the infrastructure for the
+                            next generation of cloud-native applications. Our teams tackle some of the hardest scaling
+                            problems on the web. We believe in empowering our employees with autonomy and purpose.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Open Roles (1)
+                        </h2>
+                        <div class="space-y-4">
+                            <!-- Job Item -->
+                            <div class="flex justify-between items-center p-4 border border-slate-100 rounded-lg hover:border-primary transition cursor-pointer"
+                                onclick="openJob('techcorp-frontend')">
+                                <div>
+                                    <h3 class="font-bold text-navy">Senior Frontend Developer</h3>
+                                    <p class="text-sm text-slate-500">Austin, TX • $140k - $170k</p>
+                                </div>
+                                <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Benefits &
+                            Perks</h2>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-green-500 text-base">check_circle</span> 100%
+                                Health Coverage</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                Unlimited PTO</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                401(k) Matching</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                Remote Workspace Stipend</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== PAGE: MESSAGES ========== -->
+    <div id="page-messages" class="page-section flex-grow bg-white">
+        <div class="flex h-[calc(100vh-3.5rem)] max-w-7xl mx-auto border-x border-slate-200">
+            <!-- Sidebar list -->
+            <div class="w-80 border-r border-slate-200 flex-col hidden md:flex shrink-0">
+                <div class="p-4 border-b border-slate-200">
+                    <h2 class="font-bold text-lg text-slate-900">Messages</h2>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    <!-- Chat threading -->
+                    <div class="p-4 border-b border-slate-100 bg-primary/5 cursor-pointer">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-semibold text-slate-900 text-sm truncate">Sarah Jenkins (TechCorp)</h3>
+                            <span class="text-xs text-slate-400 font-medium whitespace-nowrap">10:42 AM</span>
+                        </div>
+                        <p class="text-sm text-slate-600 truncate">Looking forward to the interview...</p>
+                    </div>
+                    <div class="p-4 border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-semibold text-slate-900 text-sm truncate">Michael Chen (Netflix)</h3>
+                            <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Yesterday</span>
+                        </div>
+                        <p class="text-sm text-slate-500 truncate">Thanks for applying. We will review it.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Chat area -->
+            <div class="flex-1 flex flex-col bg-slate-50/50">
+                <div class="px-6 py-4 border-b border-slate-200 bg-white flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
+                            SJ</div>
+                        <div>
+                            <h2 class="font-bold text-slate-900">Sarah Jenkins</h2>
+                            <p class="text-xs text-slate-500">Recruiter @ TechCorp Global</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                    <!-- Received -->
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">
+                            SJ</div>
+                        <div
+                            class="bg-white border border-slate-200 rounded-2xl p-4 max-w-md shadow-sm rounded-tl-none">
+                            <p class="text-slate-700 text-sm">Hi! We loved your profile. Are you available for a quick
+                                chat this week regarding the Frontend role?</p>
+                        </div>
+                    </div>
+                    <!-- Sent -->
+                    <div class="flex items-start gap-3 flex-row-reverse">
+                        <div class="bg-primary text-white rounded-2xl p-4 max-w-md shadow-sm rounded-tr-none">
+                            <p class="text-sm">Absolutely, I'd love to learn more about the position!</p>
+                        </div>
+                    </div>
+                    <!-- Received -->
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">
+                            SJ</div>
+                        <div
+                            class="bg-white border border-slate-200 rounded-2xl p-4 max-w-md shadow-sm rounded-tl-none">
+                            <p class="text-slate-700 text-sm">Great, I will send over the interview scheduling link to
+                                Calendly momentarily. Looking forward to it.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border-t border-slate-200">
+                    <div class="relative">
+                        <input type="text" placeholder="Type your message..."
+                            class="w-full pl-4 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
+                        <button
+                            class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-primary text-white rounded-lg hover:bg-primary-dark transition"
+                            onclick="showToast('Message sent', {type: 'success'})"><span
+                                class="material-symbols-outlined text-sm">send</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PAGE: SALARY INSIGHTS ========== -->
+    <div id="page-salary-insights" class="page-section flex-grow">
+        <main class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="text-center mb-12">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-semibold mb-6">
+                    <span class="material-symbols-outlined text-sm">verified</span> Live Market Data
+                </div>
+                <h1 class="text-3xl font-bold text-slate-900 mb-4">Tech Industry Salary Insights</h1>
+                <p class="text-lg text-slate-500 max-w-2xl mx-auto">Real-time compensation data aggregated from verified
+                    offers to help you negotiate your worth.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-8 max-w-2xl mx-auto flex gap-4">
+                <input type="text" placeholder="Search a role (e.g. Data Scientist)"
+                    class="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-4 focus:ring-2 focus:ring-primary outline-none">
+                <button
+                    class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition shadow-sm">Search</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Data Card -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col hover:shadow-md hover:border-primary transition cursor-pointer">
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">Senior Software Engineer</h3>
+                    <p class="text-sm text-slate-500 mb-6">San Francisco, CA</p>
+                    <div class="mt-auto">
+                        <div class="text-3xl font-black text-primary mb-2">$182,500 <span
+                                class="text-sm font-medium text-slate-400">/yr</span></div>
+                        <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+                            <div class="bg-primary rounded-full h-2 w-3/4"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 font-medium">
+                            <span>$150k</span><span>$220k</span></div>
+                    </div>
+                </div>
+                <!-- Data Card 2 -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col hover:shadow-md hover:indigo-500 transition cursor-pointer">
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">Product Designer</h3>
+                    <p class="text-sm text-slate-500 mb-6">Remote (US)</p>
+                    <div class="mt-auto">
+                        <div class="text-3xl font-black text-indigo-600 mb-2">$145,000 <span
+                                class="text-sm font-medium text-slate-400">/yr</span></div>
+                        <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+                            <div class="bg-indigo-500 rounded-full h-2 w-1/2"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 font-medium">
+                            <span>$110k</span><span>$175k</span></div>
+                    </div>
+                </div>
+                <!-- Data Card 3 -->
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col hover:shadow-md hover:border-emerald-500 transition cursor-pointer">
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">Product Manager</h3>
+                    <p class="text-sm text-slate-500 mb-6">New York, NY</p>
+                    <div class="mt-auto">
+                        <div class="text-3xl font-black text-emerald-600 mb-2">$160,000 <span
+                                class="text-sm font-medium text-slate-400">/yr</span></div>
+                        <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+                            <div class="bg-emerald-500 rounded-full h-2 w-2/3"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 font-medium">
+                            <span>$130k</span><span>$200k</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <!-- ========== JAVASCRIPT ROUTER ========== -->
     <script>
         // Page navigation state
@@ -3233,7 +3202,13 @@
             jobsSearchText: '',
             jobsLocationText: '',
             jobsSort: 'Relevance',
-            savedJobs: new Set()
+            savedJobs: new Set(['stripe-ui', 'linear-product', 'netflix-data']),
+            appliedJobs: [
+                { id: 'techcorp-frontend', status: 'interview', date: 'Applied Dec 8', stage: 'Stage 3 / 5', type: 'Interviewing', progress: 60, nextStep: 'Final Presentation · In 2 days', color: 'indigo', themeColor: 'text-indigo-700', themeBg: 'bg-indigo-100', barColor: 'from-primary to-blue-400', typeClass: 'text-primary' },
+                { id: 'nexus-talent', status: 'offer', date: 'Applied Nov 22', stage: 'Final', type: 'Offer Received 🎉', progress: 100, nextStep: '⏳ Expires in 24h', color: 'emerald', themeColor: 'text-emerald-700', themeBg: 'bg-emerald-100', barColor: 'from-emerald-400 to-emerald-600', typeClass: 'text-emerald-600' },
+                { id: 'acme-designer', status: 'active', date: 'Applied Dec 1', stage: 'Stage 1 / 5', type: 'Screening', progress: 20, nextStep: 'Awaiting feedback', color: 'slate', themeColor: 'text-slate-500', themeBg: 'bg-slate-100', barColor: 'bg-slate-300', typeClass: 'text-slate-500' },
+                { id: 'slack-pm', status: 'active', date: 'Applied Dec 10', stage: 'Stage 2 / 5', type: 'Under Review', progress: 40, nextStep: 'Technical assessment', color: 'amber', themeColor: 'text-blue-600', themeBg: 'bg-blue-50', barColor: 'from-amber-300 to-amber-500', typeClass: 'text-amber-600', avatarIcon: true }
+            ]
         };
 
         // Fixed: Robust localStorage with fallback
@@ -3437,6 +3412,8 @@
             } else if (page === 'jobs') {
                 updateJobsPaginationUI();
                 applyJobsFilterSort({ silent: true });
+            } else if (page === 'candidate-dashboard') {
+                renderCandidateDashboard();
             }
         }
 
@@ -3479,6 +3456,7 @@
             updateCalendarUI();
             updateJobsPaginationUI();
             updateAuthUI();
+            renderCandidateDashboard(); // Initial render for dashboards
             navigateTo(hash, { push: false });
         });
 
@@ -3799,6 +3777,8 @@
         }
 
         function filterApplications(filter) {
+            hfState.applicationFilter = filter; // Store active filter
+
             document.querySelectorAll('.app-filter-btn').forEach(btn => {
                 const isActive = btn.dataset.filter === filter;
                 btn.classList.toggle('bg-white', isActive);
@@ -3808,21 +3788,148 @@
                 btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
             });
 
-            const cards = document.querySelectorAll('.app-card');
-            let visible = 0;
-            cards.forEach(card => {
-                const status = card.dataset.status || 'active';
-                let show = false;
-                if (filter === 'all') show = true;
-                else if (filter === 'active') show = ['active', 'screening'].includes(status);
-                else if (filter === 'interview') show = status === 'interview';
-                else if (filter === 'offer') show = status === 'offer';
-                card.classList.toggle('hidden', !show);
-                if (show) visible++;
-            });
+            renderCandidateDashboard(); // Re-render list based on new filter
+        }
 
-            const empty = document.getElementById('hf-app-empty');
-            if (empty) empty.classList.toggle('hidden', visible > 0);
+        // Add dynamic rendering for candidate dashboard
+        function renderCandidateDashboard() {
+            // Render Applications
+            const appList = document.getElementById('hf-applications-list');
+            const appEmpty = document.getElementById('hf-app-empty');
+            const appBadge = document.getElementById('hf-active-apps-badge');
+
+            if (appList && appEmpty) {
+                const filter = hfState.applicationFilter || 'all';
+                const activeCount = hfState.appliedJobs.filter(app => ['active', 'screening', 'interview'].includes(app.status)).length;
+
+                if (appBadge) {
+                    appBadge.textContent = `${activeCount} Active`;
+                }
+
+                let visibleCount = 0;
+                appList.innerHTML = ''; // Clear current
+
+                hfState.appliedJobs.forEach(app => {
+                    let show = false;
+                    if (filter === 'all') show = true;
+                    else if (filter === 'active') show = ['active', 'screening'].includes(app.status);
+                    else if (filter === 'interview') show = app.status === 'interview';
+                    else if (filter === 'offer') show = app.status === 'offer';
+
+                    if (show) {
+                        visibleCount++;
+                        const job = hfJobs[app.id] || { title: 'Role', company: 'Company' };
+                        const companyInitials = job.company.substring(0, 2).toUpperCase();
+
+                        // Icon/Avatar logic based on mock data structure
+                        let avatarHtml = `<div class="w-10 h-10 rounded-xl ${app.themeBg} flex items-center justify-center ${app.themeColor} font-black text-xs shrink-0 shadow-sm">${companyInitials}</div>`;
+                        if (app.avatarIcon) {
+                            avatarHtml = `<div class="w-10 h-10 rounded-xl ${app.themeBg} flex items-center justify-center ${app.themeColor} shrink-0 shadow-sm"><span class="material-icons text-[20px]">chat</span></div>`;
+                        }
+
+                        // Right action area logic
+                        let actionHtml = '';
+                        let extraDetailsHtml = '';
+
+                        if (app.status === 'interview') {
+                            extraDetailsHtml = `
+                                <div class="hidden md:flex items-center gap-2 text-xs text-slate-600 min-w-[140px]">
+                                    <span class="flex w-2 h-2 shrink-0"><span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-orange-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span></span>
+                                    <span class="font-medium">${app.nextStep.split('·')[0]} <span class="text-slate-400 font-normal">· ${app.nextStep.split('·')[1] || ''}</span></span>
+                                </div>`;
+                            actionHtml = `<div class="shrink-0"><button onclick="navigateTo('interview-scheduler')" class="text-xs font-bold bg-primary/5 hover:bg-primary text-primary hover:text-white border border-primary/20 hover:border-primary px-3.5 py-1.5 rounded-lg transition-all">Prepare</button></div>`;
+                        } else if (app.status === 'offer') {
+                            extraDetailsHtml = `
+                                <div class="hidden md:block min-w-[140px]">
+                                    <p class="text-xs font-semibold text-red-500">${app.nextStep}</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Review compensation terms</p>
+                                </div>`;
+                            actionHtml = `<div class="shrink-0"><button data-action="review-offer" class="text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-3.5 py-1.5 rounded-lg transition-all shadow-sm shadow-emerald-200">Review Offer</button></div>`;
+                        } else if (app.status === 'active' && app.progress > 30) {
+                            // Assuming test phase
+                            extraDetailsHtml = `
+                                <div class="hidden md:block min-w-[140px]">
+                                    <p class="text-xs font-medium text-slate-500">${app.nextStep}</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Due in 5 days</p>
+                                </div>`;
+                            actionHtml = `<div class="shrink-0"><button class="text-xs font-bold text-amber-600 border border-amber-200 bg-amber-50 hover:bg-amber-100 px-3.5 py-1.5 rounded-lg transition-all">Start Test</button></div>`;
+                        } else {
+                            extraDetailsHtml = `
+                                <div class="hidden md:block min-w-[140px]">
+                                    <p class="text-xs text-slate-400 font-medium">${app.nextStep}</p>
+                                </div>`;
+                            actionHtml = `<div class="shrink-0"><span class="text-[10px] text-slate-400 italic">No action needed</span></div>`;
+                        }
+
+                        appList.innerHTML += `
+                            <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/60 transition-colors group app-card" data-status="${app.status}" data-job-id="${app.id}">
+                                <div class="flex items-center gap-3 flex-1 min-w-0 pointer-events-none cursor-pointer" onclick="openJob('${app.id}')" style="pointer-events: auto;">
+                                    ${avatarHtml}
+                                    <div class="min-w-0">
+                                        <p class="text-sm font-bold text-slate-900 truncate group-hover:text-primary transition-colors">${job.title}</p>
+                                        <p class="text-xs text-slate-400">${job.company} · ${app.date}</p>
+                                    </div>
+                                </div>
+                                <div class="flex-1 sm:max-w-[220px]">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="text-xs font-semibold ${app.typeClass}">${app.type}</span>
+                                        <span class="text-[10px] text-slate-400 font-medium">${app.stage}</span>
+                                    </div>
+                                    <div class="w-full h-2 ${app.progress < 30 ? 'bg-slate-100' : 'bg-' + app.color + '-50'} rounded-full overflow-hidden">
+                                        <div class="h-full w-[${app.progress}%] ${app.barColor} ${app.progress < 30 ? 'bg-slate-300' : ''} ${app.status === 'interview' ? 'progress-bar-striped' : ''} rounded-full"></div>
+                                    </div>
+                                </div>
+                                ${extraDetailsHtml}
+                                ${actionHtml}
+                            </div>
+                        `;
+                    }
+                });
+
+                appEmpty.classList.toggle('hidden', visibleCount > 0);
+            }
+
+            // Render Saved Jobs
+            const savedList = document.getElementById('hf-saved-jobs-list');
+            if (savedList) {
+                savedList.innerHTML = '';
+
+                if (hfState.savedJobs.size === 0) {
+                    savedList.innerHTML = `
+                        <div class="p-6 text-center">
+                            <span class="material-symbols-outlined text-slate-300 text-3xl mb-2">bookmark_border</span>
+                            <p class="text-sm text-slate-500 font-medium">No saved jobs yet.</p>
+                            <button onclick="navigateTo('jobs')" class="mt-2 text-xs text-primary font-bold hover:underline">Find jobs to save →</button>
+                        </div>
+                     `;
+                } else {
+                    hfState.savedJobs.forEach(jobId => {
+                        const job = hfJobs[jobId] || { title: 'Role', company: 'Company', salary: '', location: '', workType: '' };
+                        // Cycle through some random icon colors based on string length to roughly match the mock
+                        const colors = ['bg-indigo-50 text-indigo-600', 'bg-violet-50 text-violet-600', 'bg-red-50 text-red-600', 'bg-emerald-50 text-emerald-600'];
+                        const icons = ['payments', 'line_axis', 'movie', 'work'];
+                        const cIdx = jobId.length % colors.length;
+                        const theme = colors[cIdx];
+                        const iconHtml = icons[cIdx];
+
+                        savedList.innerHTML += `
+                            <div class="px-5 py-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors cursor-pointer group" onclick="openJob('${jobId}')" data-job-id="${jobId}">
+                                <div class="w-9 h-9 rounded-lg ${theme.split(' ')[0]} flex items-center justify-center shrink-0">
+                                    <span class="material-icons ${theme.split(' ')[1]} text-[18px]">${iconHtml}</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold text-slate-900 truncate group-hover:text-primary transition-colors">${job.title}</p>
+                                    <p class="text-[10px] text-slate-400">${job.company} · ${job.workType === 'Remote' ? 'Remote' : job.location} · ${job.salary}</p>
+                                </div>
+                                <button class="p-1 rounded text-slate-300 hover:text-red-500 transition-colors ml-2 shrink-0" onclick="event.stopPropagation(); toggleSaveJob(this, '${jobId}');" aria-label="Remove saved job">
+                                    <span class="material-symbols-outlined text-[18px]">bookmark_remove</span>
+                                </button>
+                                <span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-[18px] transition-colors ml-1">arrow_forward_ios</span>
+                            </div>
+                        `;
+                    });
+                }
+            }
         }
 
         function togglePwVisibility(inputId, btn) {
@@ -3854,6 +3961,7 @@
                 }
                 showToast('Job saved! View in your dashboard.', { type: 'success' });
             }
+            renderCandidateDashboard(); // Update lists visually
         }
 
         function shareJob() {
@@ -3994,12 +4102,31 @@
                     }
 
                     if (action === 'quick-apply') {
-                        showToast('Quick apply submitted (demo).', { type: 'success' });
+                        const jobEl = actionEl.closest('[data-job-id]');
+                        const jobIdToApply = jobEl ? jobEl.dataset.jobId : hfState.selectedJobId;
+
+                        if (!hfState.appliedJobs.find(a => a.id === jobIdToApply)) {
+                            hfState.appliedJobs.unshift({
+                                id: jobIdToApply, status: 'active', date: 'Applied just now', stage: 'Stage 1 / 5', type: 'Screening', progress: 10, nextStep: 'Application submitted', color: 'slate', themeColor: 'text-slate-500', themeBg: 'bg-slate-100', barColor: 'bg-slate-300', typeClass: 'text-slate-500'
+                            });
+                            showToast('Quick apply submitted (demo).', { type: 'success' });
+                            renderCandidateDashboard();
+                        } else {
+                            showToast('You have already applied for this role.', { type: 'info' });
+                        }
                         return;
                     }
 
                     if (action === 'apply-job') {
-                        showToast('Application submitted (demo).', { type: 'success' });
+                        if (!hfState.appliedJobs.find(a => a.id === hfState.selectedJobId)) {
+                            hfState.appliedJobs.unshift({
+                                id: hfState.selectedJobId, status: 'active', date: 'Applied just now', stage: 'Stage 1 / 5', type: 'Screening', progress: 10, nextStep: 'Application submitted', color: 'slate', themeColor: 'text-slate-500', themeBg: 'bg-slate-100', barColor: 'bg-slate-300', typeClass: 'text-slate-500'
+                            });
+                            showToast('Application submitted (demo).', { type: 'success' });
+                            renderCandidateDashboard();
+                        } else {
+                            showToast('You have already applied for this role.', { type: 'info' });
+                        }
                         return;
                     }
 
@@ -4081,7 +4208,7 @@
 
                 // Handle job card clicks (but not button clicks inside them)
                 const jobEl = event.target.closest('[data-job-id]');
-                if (jobEl && jobEl.dataset.jobId && !event.target.closest('button')) {
+                if (jobEl && jobEl.dataset.jobId && !event.target.closest('button') && !event.target.closest('a')) {
                     event.preventDefault();
                     openJob(jobEl.dataset.jobId);
                 }

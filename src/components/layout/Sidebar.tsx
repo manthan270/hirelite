@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Briefcase, FileText, Settings, Building2 } from 'lucide-react';
+import { LayoutDashboard, Briefcase, FileText, Settings, Building2, Sparkles } from 'lucide-react';
 
 interface SidebarProps {
     className?: string;
@@ -16,6 +16,7 @@ export function Sidebar({ className }: SidebarProps) {
 
     const candidateLinks = [
         { name: 'Dashboard', href: '/dashboard/candidate', icon: LayoutDashboard },
+        { name: 'Resume Analyzer', href: '/dashboard/resume-analyzer', icon: Sparkles },
         { name: 'My Applications', href: '/dashboard/candidate/applications', icon: FileText },
         { name: 'Saved Jobs', href: '/dashboard/candidate/saved', icon: Briefcase },
         { name: 'Settings', href: '/dashboard/candidate/settings', icon: Settings },
