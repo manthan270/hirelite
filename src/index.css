@@ -1,0 +1,178 @@
+/* Fonts loaded via <link> in index.html — no @import needed */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply antialiased text-[#1A1A1F] dark:text-[#EAEAE8] bg-[#F7F6F3] dark:bg-[#0A0A0F] transition-colors duration-500;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  #root {
+    @apply overflow-x-hidden;
+  }
+
+  /* ── Typographic scale — Space Grotesk for headings ───── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+  h2 {
+    font-weight: 600;
+  }
+  h3 {
+    font-weight: 600;
+  }
+  h4, h5, h6 {
+    font-weight: 500;
+  }
+
+  /* DM Sans for body elements */
+  p, span, a, li, label, input, textarea, select, button {
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+
+@layer components {
+  /* Editorial headline — crisp tracking */
+  .editorial-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+  }
+
+  /* Eyebrow label — small caps feel */
+  .eyebrow-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+@layer utilities {
+  /* Floating glass nav — light + dark */
+  .glass-morphism {
+    background: rgba(247, 246, 243, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  }
+
+  .dark .glass-morphism {
+    background: rgba(10, 10, 15, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .glass-card {
+    @apply bg-white/60 dark:bg-[#1A1A1F]/60 backdrop-blur-lg border border-black/[0.04] dark:border-white/[0.06] rounded-2xl;
+    box-shadow: 0 8px 32px rgba(20, 20, 30, 0.04);
+  }
+
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#8B7EF8];
+  }
+
+  /* Starfield constellation background for hero (dark only) */
+  .starfield {
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,255,255,0.7) 50%, transparent 50%),
+      radial-gradient(1px 1px at 20% 45%, rgba(255,255,255,0.5) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 35% 10%, rgba(255,255,255,0.6) 50%, transparent 50%),
+      radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.4) 50%, transparent 50%),
+      radial-gradient(2px 2px at 70% 20%, rgba(255,255,255,0.8) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 50%, rgba(255,255,255,0.5) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 15% 70%, rgba(255,255,255,0.6) 50%, transparent 50%),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.4) 50%, transparent 50%),
+      radial-gradient(2px 2px at 60% 65%, rgba(255,255,255,0.7) 50%, transparent 50%),
+      radial-gradient(1px 1px at 80% 75%, rgba(255,255,255,0.5) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 25% 55%, rgba(255,255,255,0.5) 50%, transparent 50%),
+      radial-gradient(1px 1px at 45% 25%, rgba(255,255,255,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.4) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 5% 90%, rgba(255,255,255,0.6) 50%, transparent 50%),
+      radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.4) 50%, transparent 50%),
+      radial-gradient(2px 2px at 95% 40%, rgba(255,255,255,0.5) 50%, transparent 50%),
+      radial-gradient(1px 1px at 30% 95%, rgba(255,255,255,0.4) 50%, transparent 50%);
+  }
+
+  /* Constellation lines overlay */
+  .constellation-lines {
+    background-image:
+      linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03) 40.5%, rgba(255,255,255,0.03) 41%, transparent 41.5%),
+      linear-gradient(45deg, transparent 55%, rgba(255,255,255,0.02) 55.5%, rgba(255,255,255,0.02) 56%, transparent 56.5%),
+      linear-gradient(160deg, transparent 30%, rgba(255,255,255,0.025) 30.5%, rgba(255,255,255,0.025) 31%, transparent 31.5%);
+  }
+
+  /* Primary gradient CTA */
+  .gradient-cta {
+    background: linear-gradient(135deg, #4A3BBF 0%, #5B4CDB 100%);
+  }
+
+  .gradient-cta:hover {
+    filter: brightness(1.08);
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Dual-handle salary range slider */
+input[type='range'].appearance-none::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5B4CDB;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(91,76,219,0.4);
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+input[type='range'].appearance-none::-webkit-slider-thumb:hover {
+  background: #4A3BBF;
+  box-shadow: 0 0 0 4px rgba(74,59,191,0.2);
+}
+input[type='range'].appearance-none::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5B4CDB;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(91,76,219,0.4);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+input[type='range'].appearance-none::-webkit-slider-runnable-track {
+  background: transparent;
+}
+input[type='range'].appearance-none::-moz-range-track {
+  background: transparent;
+}

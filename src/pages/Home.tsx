@@ -1,0 +1,17 @@
+import { HeroSection } from '@/components/home/HeroSection';
+import { TrustedBySection } from '@/components/home/TrustedBySection';
+import { CategoriesSection } from '@/components/home/CategoriesSection';
+import { FeaturedSection } from '@/components/home/FeaturedSection';
+import { NewsletterSection } from '@/components/home/NewsletterSection';
+
+export function Home() {
+    return (
+        <>
+            <HeroSection />
+            <TrustedBySection />
+            <CategoriesSection />
+            <FeaturedSection />
+            <NewsletterSection />
+        </>
+    );
+}
