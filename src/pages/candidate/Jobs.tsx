@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 
 export default function Jobs() {
     const [searchParams] = useSearchParams();
-    const { jobs } = useJobStore();
+    const jobs = useJobStore((state) => state.jobs);
 
     /* ─── Search State ─────────────────── */
     const [search, setSearch] = useState(searchParams.get('q') ?? '');
@@ -33,7 +33,9 @@ export default function Jobs() {
     const [showMobileFilters, setShowMobileFilters] = useState(false);
 
     /* ─── Global saved jobs store ──────── */
-    const { toggleSave, isSaved } = useSavedJobsStore();
+    const toggleSave = useSavedJobsStore((state) => state.toggleSave);
+    const savedJobIds = useSavedJobsStore((state) => state.savedJobIds);
+    const isSaved = useCallback((jobId: string) => savedJobIds.includes(jobId), [savedJobIds]);
 
     /* ─── Derived: has active filters ──── */
     const hasActiveFilters = selectedTypes.length > 0 || selectedExp.length > 0 || selectedSalary.length > 0 || salarySlider > 0;

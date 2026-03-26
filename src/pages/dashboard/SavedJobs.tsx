@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 
 export default function SavedJobs() {
-    const { savedJobIds, toggleSave, clearAll } = useSavedJobsStore();
-    const { jobs } = useJobStore();
+    const savedJobIds = useSavedJobsStore((state) => state.savedJobIds);
+    const toggleSave = useSavedJobsStore((state) => state.toggleSave);
+    const clearAll = useSavedJobsStore((state) => state.clearAll);
+    const jobs = useJobStore((state) => state.jobs);
 
     const savedJobs = useMemo(() => {
         return savedJobIds

@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/Button';
 import { Search } from 'lucide-react';
 
 export default function CandidateDashboard() {
-    const { search, setSearch, jobs } = useJobStore();
+    const search = useJobStore((state) => state.search);
+    const setSearch = useJobStore((state) => state.setSearch);
+    const jobs = useJobStore((state) => state.jobs);
 
     // Compute filtered jobs via useMemo instead of calling filteredJobs() on every render
     const filtered = useMemo(() => {

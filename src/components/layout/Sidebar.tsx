@@ -8,7 +8,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ className }: SidebarProps) {
-    const { user } = useAuthStore();
+    const user = useAuthStore((state) => state.user);
     const location = useLocation();
     const role = user?.role;
 

@@ -5,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Briefcase, Users, TrendingUp } from 'lucide-react';
 
 export default function EmployerDashboard() {
-    const { jobs } = useJobStore();
-    const { applications } = useApplicationStore();
+    const jobs = useJobStore((state) => state.jobs);
+    const applications = useApplicationStore((state) => state.applications);
 
     // Mock employer filter - assuming the logged in employer is "TechCorp Global"
     const companyJobs = jobs.filter(job => job.company === 'TechCorp Global');

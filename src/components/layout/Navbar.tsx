@@ -7,7 +7,9 @@ import { useAuthStore } from '@/store/useAuthStore';
 
 export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { user, isAuthenticated, logout } = useAuthStore();
+    const user = useAuthStore((state) => state.user);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
     const location = useLocation();
 

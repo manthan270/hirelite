@@ -9,13 +9,15 @@ import { useSavedJobsStore } from '@/store/useSavedJobsStore';
 import toast from 'react-hot-toast';
 
 export function FeaturedSection() {
-    const { toggleSave, isSaved } = useSavedJobsStore();
+    const toggleSave = useSavedJobsStore((state) => state.toggleSave);
+    const savedJobIds = useSavedJobsStore((state) => state.savedJobIds);
+    const isSaved = useCallback((jobId: string) => savedJobIds.includes(jobId), [savedJobIds]);
 
     const handleToggleSave = useCallback((jobId: string, label: string) => {
-        const wasSaved = isSaved(jobId);
+        const wasSaved = savedJobIds.includes(jobId);
         toggleSave(jobId);
         toast.success(wasSaved ? `${label} removed from saved jobs.` : `${label} saved.`);
-    }, [toggleSave, isSaved]);
+    }, [toggleSave, savedJobIds]);
 
     return (
         <section className="py-16 bg-white dark:bg-gradient-to-b dark:from-[#0A0A0F] dark:to-[#0D0D14] border-t border-black/[0.04] dark:border-transparent transition-colors duration-500">

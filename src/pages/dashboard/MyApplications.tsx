@@ -8,9 +8,9 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 
 export default function MyApplications() {
-    const { user } = useAuthStore();
-    const { applications } = useApplicationStore();
-    const { jobs } = useJobStore();
+    const user = useAuthStore((state) => state.user);
+    const applications = useApplicationStore((state) => state.applications);
+    const jobs = useJobStore((state) => state.jobs);
 
     const userName = user?.name ?? '';
 

@@ -14,15 +14,15 @@ interface JobCardProps {
 
 // ... imports remain same but ensuring visually updated
 export function JobCard({ job }: JobCardProps) {
-    const { user } = useAuthStore();
-    const { apply, hasApplied, getJobApplications } = useApplicationStore();
+    const user = useAuthStore((state) => state.user);
+    const apply = useApplicationStore((state) => state.apply);
 
     const isCandidate = user?.role === 'candidate';
     const isEmployer = user?.role === 'employer';
-    const applied = isCandidate && user ? hasApplied(job.id, user.name) : false;
-
-    // For employer view, show applicant count
-    const applicantCount = getJobApplications(job.id).length;
+    
+    // Subscribe actively to the derivations for this component to ensure reactivity
+    const applied = useApplicationStore((state) => isCandidate && user ? state.applications.some(a => a.jobId === job.id && a.candidateName === user.name) : false);
+    const applicantCount = useApplicationStore((state) => state.applications.filter(app => app.jobId === job.id).length);
 
     const handleApply = (e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent card click

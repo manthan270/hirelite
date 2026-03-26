@@ -35,16 +35,18 @@ function PageLoader() {
 function AppContent() {
     const [searchParams] = useSearchParams();
     const login = useAuthStore((state) => state.login);
-    const { isAuthenticated, user } = useAuthStore();
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const user = useAuthStore((state) => state.user);
 
     useEffect(() => {
+        if (isAuthenticated) return;
         const demoRole = searchParams.get('demo');
         if (demoRole === 'candidate') {
             login('demo@candidate.com', 'candidate');
         } else if (demoRole === 'employer') {
             login('demo@employer.com', 'employer');
         }
-    }, [searchParams, login]);
+    }, [searchParams, login, isAuthenticated]);
 
     return (
         <>

@@ -8,10 +8,10 @@ import toast from 'react-hot-toast';
 export function JobDetail() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const { jobs } = useJobStore();
-    const { user } = useAuthStore();
-    const { apply, hasApplied } = useApplicationStore();
-    const { toggleSave, isSaved: checkSaved } = useSavedJobsStore();
+    const jobs = useJobStore((state) => state.jobs);
+    const user = useAuthStore((state) => state.user);
+    const apply = useApplicationStore((state) => state.apply);
+    const toggleSave = useSavedJobsStore((state) => state.toggleSave);
 
     const job = jobs.find((j) => j.id === id);
     const similarJobs = jobs.filter((j) => j.id !== id).slice(0, 3);
@@ -26,7 +26,7 @@ export function JobDetail() {
     }
 
     const isCandidate = user?.role === 'candidate';
-    const applied = isCandidate && user ? hasApplied(job.id, user.name) : false;
+    const applied = useApplicationStore((state) => isCandidate && user ? state.applications.some(a => a.jobId === job.id && a.candidateName === user.name) : false);
 
     const handleApply = () => {
         if (!user) {
@@ -49,7 +49,7 @@ export function JobDetail() {
         toast.success('Application submitted successfully.');
     };
 
-    const isSaved = job ? checkSaved(job.id) : false;
+    const isSaved = useSavedJobsStore((state) => job ? state.savedJobIds.includes(job.id) : false);
 
     const handleSaveToggle = () => {
         if (!job) return;
