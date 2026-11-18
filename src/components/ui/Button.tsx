@@ -1,20 +1,19 @@
-/* eslint-disable react-refresh/only-export-components */
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-[15px] font-semibold ring-offset-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+    "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-[15px] font-semibold ring-offset-[#F8F6EE] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-[#101310]",
     {
         variants: {
             variant: {
-                default: "bg-primary text-white hover:bg-primary-dark shadow-[0_4px_14px_0_rgba(91,76,219,0.3)] hover:shadow-[0_6px_20px_rgba(91,76,219,0.2)] hover:-translate-y-0.5 dark:bg-primary dark:hover:bg-primary-dark",
+                default: "bg-primary text-white shadow-sm hover:bg-primary-dark hover:shadow-md dark:bg-primary dark:hover:bg-primary-dark",
                 destructive: "bg-red-500 text-white hover:bg-red-600 shadow-sm dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-900/90",
-                outline: "border border-black/[0.08] bg-white/50 backdrop-blur-md hover:bg-white hover:text-[#1A1A1F] text-[#1A1A1F]/80 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-[#EAEAE8] dark:hover:bg-white/[0.08] shadow-sm",
-                secondary: "bg-[#F0EFEC] text-[#1A1A1F] hover:bg-[#E8E7E4] dark:bg-white/[0.06] dark:text-[#EAEAE8] dark:hover:bg-white/[0.1]",
-                ghost: "hover:bg-black/[0.04] hover:text-[#1A1A1F] text-[#6B6B73] dark:text-[#8A8A90] dark:hover:bg-white/[0.06] dark:hover:text-[#EAEAE8]",
-                link: "text-primary underline-offset-4 hover:underline dark:text-[#8B7EF8]",
+                outline: "border border-black/[0.09] bg-white hover:bg-[#F8F6EE] hover:text-[#1A211D] text-[#1A211D] dark:border-white/[0.1] dark:bg-white/[0.035] dark:text-[#EAEAE8] dark:hover:bg-white/[0.07]",
+                secondary: "bg-[#F1EFE6] text-[#1A211D] hover:bg-[#E9E6DB] dark:bg-white/[0.06] dark:text-[#EAEAE8] dark:hover:bg-white/[0.1]",
+                ghost: "hover:bg-black/[0.04] hover:text-[#1A211D] text-[#6B6B73] dark:text-[#8A8A90] dark:hover:bg-white/[0.06] dark:hover:text-[#EAEAE8]",
+                link: "text-primary underline-offset-4 hover:underline dark:text-[#55A697]",
             },
             size: {
                 default: "h-11 px-5 py-2",

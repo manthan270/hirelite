@@ -4,25 +4,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Lenis smooth scroll ────────────────────────────── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior handled by Lenis */
   }
   body {
-    @apply antialiased text-[#1A1A1F] dark:text-[#EAEAE8] bg-[#F7F6F3] dark:bg-[#0A0A0F] transition-colors duration-500;
-    font-family: 'DM Sans', sans-serif;
+    @apply antialiased text-[#1A211D] dark:text-[#EAEAE8] bg-[#F8F6EE] dark:bg-[#101310] transition-colors duration-500;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 1.6;
+    font-variant-numeric: lining-nums tabular-nums;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  :focus-visible {
+    outline: 2px solid #1F766A;
+    outline-offset: 3px;
+  }
+  .dark :focus-visible {
+    outline-color: #A8D9CE;
+  }
   #root {
-    @apply overflow-x-hidden;
+    overflow-x: clip;
   }
 
-  /* ── Typographic scale — Space Grotesk for headings ───── */
+  /* ── Clear type hierarchy — Manrope headings, Inter interface text ───── */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Manrope', sans-serif;
     line-height: 1.12;
     letter-spacing: -0.025em;
   }
@@ -40,23 +65,34 @@
     font-weight: 500;
   }
 
-  /* DM Sans for body elements */
+  /* Inter for body elements and controls */
   p, span, a, li, label, input, textarea, select, button {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
 @layer components {
-  /* Editorial headline — crisp tracking */
+  /* Headline treatment — restrained tracking */
   .editorial-headline {
-    font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.03em;
-    line-height: 1.06;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
   }
 
   /* Eyebrow label — small caps feel */
   .eyebrow-label {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.8125rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -67,26 +103,63 @@
 @layer utilities {
   /* Floating glass nav — light + dark */
   .glass-morphism {
-    background: rgba(247, 246, 243, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+    background: rgba(248, 246, 238, 0.94);
+    backdrop-filter: blur(10px) saturate(115%);
+    -webkit-backdrop-filter: blur(10px) saturate(115%);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  }
+
+  .glass-morphism.is-scrolled {
+    background: rgba(248, 246, 238, 0.76);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-bottom-color: rgba(0, 0, 0, 0.07);
+    box-shadow: 0 8px 24px rgba(20, 20, 30, 0.07);
   }
 
   .dark .glass-morphism {
-    background: rgba(10, 10, 15, 0.85);
-    border-bottom-color: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    background: rgba(16, 19, 16, 0.94);
+    border-bottom-color: transparent;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .dark .glass-morphism.is-scrolled {
+    background: rgba(16, 19, 16, 0.76);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
   }
 
   .glass-card {
-    @apply bg-white/60 dark:bg-[#1A1A1F]/60 backdrop-blur-lg border border-black/[0.04] dark:border-white/[0.06] rounded-2xl;
+    @apply bg-white/60 dark:bg-[#1A211D]/60 backdrop-blur-lg border border-black/[0.04] dark:border-white/[0.06] rounded-2xl;
     box-shadow: 0 8px 32px rgba(20, 20, 30, 0.04);
   }
 
+  .surface-panel {
+    @apply rounded-2xl border border-black/[0.07] bg-white shadow-sm dark:border-white/[0.09] dark:bg-[#171B18];
+  }
+
+  .salary-range-track {
+    display: block;
+    height: 0.5rem;
+    overflow: hidden;
+    border-radius: 9999px;
+    background-color: #D3D6CC;
+  }
+
+  .salary-range-track > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background-color: #1F766A;
+  }
+
+  .dark .salary-range-track {
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+
   .text-gradient {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#8B7EF8];
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#55A697];
   }
 
   /* Starfield constellation background for hero (dark only) */
@@ -122,7 +195,7 @@
 
   /* Primary gradient CTA */
   .gradient-cta {
-    background: linear-gradient(135deg, #4A3BBF 0%, #5B4CDB 100%);
+    background: linear-gradient(135deg, #185E55 0%, #1F766A 100%);
   }
 
   .gradient-cta:hover {
@@ -149,24 +222,24 @@ input[type='range'].appearance-none::-webkit-slider-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #5B4CDB;
+  background: #1F766A;
   border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(91,76,219,0.4);
+  box-shadow: 0 1px 4px rgba(31,118,106,0.35);
   cursor: pointer;
   pointer-events: all;
   transition: background 0.2s, box-shadow 0.2s;
 }
 input[type='range'].appearance-none::-webkit-slider-thumb:hover {
-  background: #4A3BBF;
-  box-shadow: 0 0 0 4px rgba(74,59,191,0.2);
+  background: #185E55;
+  box-shadow: 0 0 0 4px rgba(24,94,85,0.2);
 }
 input[type='range'].appearance-none::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #5B4CDB;
+  background: #1F766A;
   border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(91,76,219,0.4);
+  box-shadow: 0 1px 4px rgba(31,118,106,0.35);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
 }

@@ -2,15 +2,17 @@
 
 A modern job portal platform built with React, TypeScript, and Vite — connecting candidates and employers through a premium, editorial-style user experience.
 
+This repository is currently a frontend preview with sample data. Authentication, applications, messaging, contact/newsletter submissions, and resume analysis are not connected to a backend or database. Production use requires server-side authentication, authorization, storage, and real integrations.
+
 ## ✨ Features
 
 - **Job Discovery** — Browse, search, and filter job listings with an intuitive UI
 - **Candidate Dashboard** — Track applications, saved jobs, and messages
-- **Employer Dashboard** — Post jobs and manage applicants
-- **Resume Analyzer** — AI-powered resume analysis tool
+- **Employer Dashboard** — Preview job and applicant management screens
+- **Resume Analyzer** — Sample feedback preview; file contents are not read or uploaded
 - **Salary Insights** — Explore salary data and market trends
 - **Company Profiles** — Detailed company information pages
-- **Authentication** — Role-based access for candidates and employers
+- **Authentication** — Simulated in development and disabled in production until a server-side provider is configured
 - **Dark Mode** — Full theme support with smooth transitions
 - **Responsive Design** — Optimized for all screen sizes
 
@@ -32,7 +34,7 @@ A modern job portal platform built with React, TypeScript, and Vite — connecti
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18+)
+- [Node.js](https://nodejs.org/) (v20.19+ or v22.12+)
 - npm or yarn
 
 ### Installation

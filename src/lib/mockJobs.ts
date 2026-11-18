@@ -8,7 +8,8 @@ export const mockJobs: Job[] = [
         location: "Bangalore",
         salary: "INR 18L - INR 25L",
         type: "Full-time",
-        verified: true,
+        experienceLevel: "Expert",
+        verified: false,
     },
     {
         id: "saas-product",
@@ -17,6 +18,7 @@ export const mockJobs: Job[] = [
         location: "Remote (India)",
         salary: "INR 22L - INR 30L",
         type: "Permanent",
+        experienceLevel: "Expert",
         verified: false,
     },
     {
@@ -26,7 +28,8 @@ export const mockJobs: Job[] = [
         location: "Mumbai",
         salary: "INR 25L - INR 35L",
         type: "Full-time",
-        verified: true,
+        experienceLevel: "Intermediate",
+        verified: false,
     },
     {
         id: "edtech-ux",
@@ -35,7 +38,8 @@ export const mockJobs: Job[] = [
         location: "Gurgaon",
         salary: "INR 20L - INR 28L",
         type: "Full-time",
-        verified: true,
+        experienceLevel: "Expert",
+        verified: false,
     },
     {
         id: "health-data",
@@ -44,6 +48,7 @@ export const mockJobs: Job[] = [
         location: "Hyderabad",
         salary: "INR 15L - INR 22L",
         type: "Contract",
+        experienceLevel: "Intermediate",
         verified: false,
     },
     {
@@ -53,7 +58,8 @@ export const mockJobs: Job[] = [
         location: "Pune",
         salary: "INR 18L - INR 24L",
         type: "Full-time",
-        verified: true,
+        experienceLevel: "Intermediate",
+        verified: false,
     },
     {
         id: "startup-fullstack",
@@ -62,6 +68,7 @@ export const mockJobs: Job[] = [
         location: "Remote (Bangalore)",
         salary: "INR 12L - INR 18L",
         type: "Full-time",
+        experienceLevel: "Intermediate",
         verified: false,
     }
 ];

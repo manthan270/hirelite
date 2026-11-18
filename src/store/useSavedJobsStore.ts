@@ -4,13 +4,12 @@ import { persist } from 'zustand/middleware';
 interface SavedJobsState {
     savedJobIds: string[];
     toggleSave: (jobId: string) => void;
-    isSaved: (jobId: string) => boolean;
     clearAll: () => void;
 }
 
 export const useSavedJobsStore = create<SavedJobsState>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             savedJobIds: [],
             toggleSave: (jobId) => {
                 set((state) => ({
@@ -19,7 +18,6 @@ export const useSavedJobsStore = create<SavedJobsState>()(
                         : [...state.savedJobIds, jobId],
                 }));
             },
-            isSaved: (jobId) => get().savedJobIds.includes(jobId),
             clearAll: () => set({ savedJobIds: [] }),
         }),
         { name: 'elitehire-saved-jobs' }

@@ -8,40 +8,40 @@ export default {
     theme: {
         extend: {
             colors: {
-                // New warm palette
-                primary: "#5B4CDB",
-                "primary-container": "#6E5FE8",
-                "primary-dark": "#4A3BBF",
-                secondary: "#1A1A1F",
-                "secondary-container": "#57dffe",
-                "on-secondary-container": "#003544",
-                tertiary: "#684000",
-                "on-surface": "#1A1A1F",
-                "outline-variant": "#D1D0CC",
+                // Professional palette: deep teal, warm ivory, charcoal, and restrained gold.
+                primary: "#1F766A",
+                "primary-container": "#32897A",
+                "primary-dark": "#185E55",
+                secondary: "#24312D",
+                "secondary-container": "#D8E8E1",
+                "on-secondary-container": "#203B35",
+                tertiary: "#7B5B29",
+                "on-surface": "#1A211D",
+                "outline-variant": "#D3D6CC",
 
                 // Surface hierarchy — warm
-                surface: "#F7F6F3",
-                "surface-container-low": "#F0EFEC",
+                surface: "#F8F6EE",
+                "surface-container-low": "#F1EFE6",
                 "surface-container-lowest": "#FFFFFF",
-                "surface-container-high": "#E8E7E4",
-                "surface-container-highest": "#DFDEDD",
-                "surface-bright": "#FAFAF8",
+                "surface-container-high": "#E9E6DB",
+                "surface-container-highest": "#DEDACD",
+                "surface-bright": "#FFFEF9",
 
                 // Legacy aliases — warm
-                "background-light": "#F7F6F3",
-                "background-dark": "#0A0A0F",
+                "background-light": "#F8F6EE",
+                "background-dark": "#101310",
                 "surface-light": "#FFFFFF",
-                "surface-dark": "#1A1A1F",
-                accent: "#8B7EF8",
+                "surface-dark": "#1A211D",
+                accent: "#55A697",
 
                 // Hero dark palette — warm black
-                "hero-dark": "#0A0A0F",
-                "hero-mid": "#111116",
-                "hero-deep": "#08080D",
+                "hero-dark": "#101310",
+                "hero-mid": "#151B17",
+                "hero-deep": "#0B0F0C",
             },
             fontFamily: {
-                display: ["'Space Grotesk'", "sans-serif"],
-                sans: ["'DM Sans'", "sans-serif"],
+                display: ["'Manrope'", "sans-serif"],
+                sans: ["'Inter'", "sans-serif"],
             },
             borderRadius: {
                 DEFAULT: "0.5rem",
@@ -54,7 +54,7 @@ export default {
             boxShadow: {
                 glass: "0 8px 32px 0 rgba(20, 20, 30, 0.06)",
                 soft: "0 20px 40px -15px rgba(0,0,0,0.04)",
-                glow: "0 0 20px rgba(91, 76, 219, 0.35)",
+                glow: "0 0 20px rgba(31, 118, 106, 0.28)",
                 ambient: "0 8px 32px rgba(20, 20, 30, 0.05)",
                 "ambient-hover": "0 12px 48px rgba(20, 20, 30, 0.07)",
                 "card-lift": "0 20px 48px rgba(20, 20, 30, 0.06)",

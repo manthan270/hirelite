@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Bookmark, MapPin, DollarSign, Clock, Trash2, Briefcase } from 'lucide-react';
+import { Bookmark, MapPin, Clock, Trash2, Briefcase } from 'lucide-react';
 import { useSavedJobsStore } from '@/store/useSavedJobsStore';
 import { useJobStore } from '@/store/useJobStore';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+import { formatSalary } from '@/lib/constants';
 
 export default function SavedJobs() {
     const savedJobIds = useSavedJobsStore((state) => state.savedJobIds);
@@ -17,7 +17,7 @@ export default function SavedJobs() {
         return savedJobIds
             .map((id) => jobs.find((j) => j.id === id))
             .filter(Boolean)
-            .reverse(); // newest saved first
+            .reverse();
     }, [savedJobIds, jobs]);
 
     const handleRemove = (jobId: string, title: string) => {
@@ -32,12 +32,11 @@ export default function SavedJobs() {
 
     return (
         <div className="space-y-6 max-w-5xl mx-auto">
-            {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Saved Jobs</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1">
-                        Jobs you've bookmarked for later. {savedJobs.length > 0 && <span className="font-semibold text-slate-700 dark:text-slate-300">{savedJobs.length} saved</span>}
+                    <h1 className="editorial-headline text-3xl font-bold tracking-tight text-[#1A211D] dark:text-white">Saved Jobs</h1>
+                    <p className="text-[#6B6B73] dark:text-[#8A8A90] mt-1">
+                        Jobs you've bookmarked for later. {savedJobs.length > 0 && <span className="font-semibold text-[#1A211D] dark:text-[#EAEAE8]">{savedJobs.length} saved</span>}
                     </p>
                 </div>
                 {savedJobs.length > 0 && (
@@ -52,39 +51,35 @@ export default function SavedJobs() {
                 )}
             </div>
 
-            {/* Saved Jobs List */}
             {savedJobs.length > 0 ? (
                 <div className="space-y-4">
                     {savedJobs.map((job) => job && (
                         <div
                             key={job.id}
-                            className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/40 hover:shadow-md p-5 transition-all duration-300"
+                            className="group rounded-2xl border border-black/[0.07] bg-white p-5 shadow-sm transition-colors hover:border-primary/25 hover:shadow-md dark:border-white/[0.09] dark:bg-[#171B18] dark:hover:border-primary/35"
                         >
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                 <div className="flex gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-purple-500/10 dark:from-primary/20 dark:to-purple-500/20 flex items-center justify-center text-lg font-bold text-primary dark:text-indigo-400 shrink-0 border border-primary/10 dark:border-primary/20">
+                                    <div className="w-12 h-12 rounded-xl bg-primary/[0.06] dark:bg-primary/[0.12] flex items-center justify-center text-lg font-bold text-primary shrink-0 border border-primary/10 dark:border-primary/20">
                                         {job.company.charAt(0)}
                                     </div>
                                     <div className="min-w-0">
                                         <div className="flex items-center gap-2 mb-1">
                                             <Link
                                                 to={`/jobs/${job.id}`}
-                                                className="font-bold text-slate-900 dark:text-white hover:text-primary dark:hover:text-indigo-400 transition-colors truncate"
+                                                className="rounded-sm font-semibold text-[#1A211D] transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-white"
                                             >
                                                 {job.title}
                                             </Link>
                                             {job.verified && (
-                                                <span className="flex items-center text-primary text-[10px] bg-primary/5 dark:bg-primary/10 px-1.5 py-0.5 rounded-full font-semibold shrink-0">✓ Verified</span>
+                                                <span className="flex items-center text-primary text-[11px] bg-primary/5 dark:bg-primary/10 px-1.5 py-0.5 rounded-full font-semibold shrink-0">✓ Verified</span>
                                             )}
                                         </div>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{job.company}</p>
-                                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-500 dark:text-slate-400">
+                                        <p className="text-sm text-[#6B6B73] dark:text-[#8A8A90] font-medium">{job.company}</p>
+                                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-[#6B6B73] dark:text-[#8A8A90]">
                                             <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {job.location}</span>
-                                            <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> {job.salary}</span>
+                                            <span className="flex items-center gap-1">{formatSalary(job.salary)}</span>
                                             <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {job.type}</span>
-                                        </div>
-                                        <div className="mt-3">
-                                            <Badge variant="secondary" className="text-[11px]">{job.type}</Badge>
                                         </div>
                                     </div>
                                 </div>
@@ -98,8 +93,8 @@ export default function SavedJobs() {
                                         variant="outline"
                                         size="sm"
                                         onClick={() => handleRemove(job.id, job.title)}
-                                        className="rounded-xl border-slate-200 dark:border-slate-700 text-red-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
-                                        title="Remove from saved"
+                                        aria-label={`Remove ${job.title} from saved jobs`}
+                                        className="rounded-lg border-black/[0.08] dark:border-white/[0.1] text-[#62626B] hover:text-red-600 hover:bg-red-50 dark:text-[#B5B5BD] dark:hover:bg-red-500/10 transition-colors"
                                     >
                                         <Bookmark className="w-4 h-4 fill-current" />
                                     </Button>
@@ -109,12 +104,12 @@ export default function SavedJobs() {
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center">
-                    <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                        <Bookmark className="w-8 h-8 text-slate-300 dark:text-slate-600" />
+                <div className="text-center py-14 bg-white dark:bg-white/[0.04] rounded-2xl border-2 border-dashed border-black/[0.06] dark:border-white/[0.06] flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 bg-[#F1EFE6] dark:bg-white/[0.06] rounded-full flex items-center justify-center mb-4">
+                        <Bookmark className="w-8 h-8 text-[#6B6B73]/50" />
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No saved jobs yet</h3>
-                    <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-6">
+                    <h3 className="text-lg font-bold text-[#1A211D] dark:text-white mb-1">No saved jobs yet</h3>
+                    <p className="text-[#6B6B73] dark:text-[#8A8A90] max-w-sm mx-auto mb-6">
                         Browse jobs and click the bookmark icon to save positions you're interested in.
                     </p>
                     <Button asChild className="bg-primary hover:bg-primary/90 text-white rounded-xl">

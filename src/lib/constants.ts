@@ -1,10 +1,10 @@
 import {
-    Code2, Palette, TrendingUp, Headphones,
-    Diamond, Zap, Rocket, Leaf, Globe, MapPin,
+    Code2, Palette, TrendingUp,
+    Diamond, Zap, Rocket, Leaf,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-/* ─── Types ──────────────────────────────────────────────────────── */
+// types for home page data
 export interface CategoryItem {
     icon: LucideIcon;
     label: string;
@@ -31,58 +31,35 @@ export interface FeaturedJobItem {
     link: string;
 }
 
-export interface PreviewJobItem {
-    icon: LucideIcon;
-    iconBg: string;
-    iconColor: string;
-    accent: string;
-    title: string;
-    badge: string;
-    badgeBg: string;
-    company: string;
-    salary: string;
-    exp: string;
-    mode: string;
-    modeIcon: LucideIcon;
-    time: string;
-    link: string;
-}
-
 export interface TrustedCompany {
     icon: LucideIcon;
     label: string;
     color: string;
 }
 
-/* ─── Home Page Data ─────────────────────────────────────────────── */
+// home page section data
 export const CATEGORIES: CategoryItem[] = [
-    { icon: Code2, label: 'Development', sub: 'Software, Data, AI', count: '1,204 jobs', iconColor: 'text-blue-600', hoverBg: 'group-hover:bg-blue-600', arrowHover: 'group-hover:text-blue-600 group-hover:bg-blue-600/10', link: '/jobs?q=Development' },
-    { icon: Palette, label: 'Design', sub: 'UI/UX, Graphic, Brand', count: '842 jobs', iconColor: 'text-orange-600', hoverBg: 'group-hover:bg-orange-600', arrowHover: 'group-hover:text-orange-600 group-hover:bg-orange-600/10', link: '/jobs?q=Design' },
-    { icon: TrendingUp, label: 'Sales & Marketing', sub: 'Account Exec, SEO', count: '2,100 jobs', iconColor: 'text-emerald-600', hoverBg: 'group-hover:bg-emerald-600', arrowHover: 'group-hover:text-emerald-600 group-hover:bg-emerald-600/10', link: '/jobs?q=Marketing' },
-    { icon: Headphones, label: 'Customer Success', sub: 'Support, Success, Ops', count: '540 jobs', iconColor: 'text-purple-600', hoverBg: 'group-hover:bg-purple-600', arrowHover: 'group-hover:text-purple-600 group-hover:bg-purple-600/10', link: '/jobs?q=Customer%20Success' },
+    { icon: Code2, label: 'Development', sub: 'Software engineering and web', count: '3 sample roles', iconColor: 'text-primary dark:text-[#8BC6B9]', hoverBg: 'group-hover:bg-primary', arrowHover: 'group-hover:text-primary dark:group-hover:text-[#8BC6B9] group-hover:bg-primary/10', link: '/jobs?q=Developer,Engineer' },
+    { icon: Palette, label: 'Design', sub: 'UX and product design', count: '1 sample role', iconColor: 'text-primary dark:text-[#8BC6B9]', hoverBg: 'group-hover:bg-primary', arrowHover: 'group-hover:text-primary dark:group-hover:text-[#8BC6B9] group-hover:bg-primary/10', link: '/jobs?q=Designer' },
+    { icon: TrendingUp, label: 'Product', sub: 'Strategy and product management', count: '2 sample roles', iconColor: 'text-primary dark:text-[#8BC6B9]', hoverBg: 'group-hover:bg-primary', arrowHover: 'group-hover:text-primary dark:group-hover:text-[#8BC6B9] group-hover:bg-primary/10', link: '/jobs?q=Product' },
+    { icon: Zap, label: 'Data & AI', sub: 'Data science and analytics', count: '1 sample role', iconColor: 'text-primary dark:text-[#8BC6B9]', hoverBg: 'group-hover:bg-primary', arrowHover: 'group-hover:text-primary dark:group-hover:text-[#8BC6B9] group-hover:bg-primary/10', link: '/jobs?q=Data' },
 ];
 
 export const FEATURED_JOBS: FeaturedJobItem[] = [
-    { id: 'featured-uber', initial: 'U', bg: 'bg-slate-900 dark:bg-slate-800', badge: 'New', badgeColor: 'bg-green-50 text-green-700 border-green-200 dark:bg-green-500/15 dark:text-green-400 dark:border-green-500/20', title: 'Staff Software Engineer', company: 'Uber | Bangalore, KA', salary: '₹35L - ₹50L', type: 'Full-time', location: 'On-site', employees: '500+ employees', link: '/jobs/techcorp-frontend' },
-    { id: 'featured-airbnb', initial: 'A', bg: 'bg-blue-600', badge: 'Hot', badgeColor: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/15 dark:text-purple-400 dark:border-purple-500/20', title: 'Lead Product Designer', company: 'Airbnb | Remote (India)', salary: '₹30L - ₹40L', type: 'Full-time', location: 'Remote', employees: '1k+ employees', link: '/jobs/edtech-ux' },
-    { id: 'featured-netflix', initial: 'N', bg: 'bg-red-500', badge: null, badgeColor: '', title: 'Backend Engineer', company: 'Netflix | Hyderabad, TS', salary: '₹40L+', type: 'Full-time', location: 'Hybrid', employees: '5k+ employees', link: '/jobs/fintech-backend' },
-];
-
-export const PREVIEW_JOBS: PreviewJobItem[] = [
-    { icon: Code2, iconBg: 'bg-indigo-50 dark:bg-indigo-500/10', iconColor: 'text-indigo-600 dark:text-indigo-400', accent: 'border-l-indigo-500', title: 'Senior React Developer', badge: 'TF', badgeBg: 'bg-indigo-600', company: 'TechFlow Inc.', salary: '₹18L - ₹25K', exp: '3-5 Years', mode: 'Remote India', modeIcon: Globe, time: 'Posted 1h ago', link: '/jobs/techcorp-frontend' },
-    { icon: Palette, iconBg: 'bg-orange-50 dark:bg-orange-500/10', iconColor: 'text-orange-600 dark:text-orange-400', accent: 'border-l-orange-500', title: 'Product Designer', badge: 'CS', badgeBg: 'bg-orange-600', company: 'Creative Solutions', salary: '₹12L - ₹18L', exp: '2-4 Years', mode: 'Mumbai, MH', modeIcon: MapPin, time: 'Posted 3h ago', link: '/jobs/edtech-ux' },
-    { icon: TrendingUp, iconBg: 'bg-emerald-50 dark:bg-emerald-500/10', iconColor: 'text-emerald-600 dark:text-emerald-400', accent: 'border-l-emerald-500', title: 'Data Scientist', badge: 'DC', badgeBg: 'bg-emerald-600', company: 'DataCorp', salary: '₹25L - ₹35L', exp: '4+ Years', mode: 'Hybrid', modeIcon: Globe, time: 'Posted 5h ago', link: '/jobs/health-data' },
+    { id: 'techcorp-frontend', initial: 'T', bg: 'bg-[#1A211D] dark:bg-white/[0.06]', badge: 'Sample', badgeColor: 'bg-primary/5 text-primary border-primary/20 dark:bg-primary/10 dark:text-[#55A697] dark:border-primary/20', title: 'Senior Frontend Developer', company: 'TechCorp Global', salary: '₹18L - ₹25L', type: 'Full-time', location: 'Bangalore', employees: 'Demo data', link: '/jobs/techcorp-frontend' },
+    { id: 'saas-product', initial: 'S', bg: 'bg-blue-600', badge: 'Sample', badgeColor: 'bg-primary/5 text-primary border-primary/20 dark:bg-primary/10 dark:text-[#55A697] dark:border-primary/20', title: 'Product Strategy Lead', company: 'SaaS Solutions', salary: '₹22L - ₹30L', type: 'Permanent', location: 'Remote (India)', employees: 'Demo data', link: '/jobs/saas-product' },
+    { id: 'fintech-backend', initial: 'F', bg: 'bg-red-500', badge: 'Sample', badgeColor: 'bg-primary/5 text-primary border-primary/20 dark:bg-primary/10 dark:text-[#55A697] dark:border-primary/20', title: 'Backend Engineer (Go/Rust)', company: 'FinTech Innovations', salary: '₹25L - ₹35L', type: 'Full-time', location: 'Mumbai', employees: 'Demo data', link: '/jobs/fintech-backend' },
 ];
 
 export const TRUSTED_COMPANIES: TrustedCompany[] = [
-    { icon: Diamond, label: 'Acme Corp', color: 'text-blue-600 dark:text-blue-400' },
-    { icon: Zap, label: 'EnergyInc', color: 'text-green-600 dark:text-green-400' },
-    { icon: Code2, label: 'DevSpace', color: 'text-purple-600 dark:text-purple-400' },
-    { icon: Rocket, label: 'RocketLab', color: 'text-red-500 dark:text-red-400' },
-    { icon: Leaf, label: 'GreenTech', color: 'text-emerald-600 dark:text-emerald-400' },
+    { icon: Diamond, label: 'Acme Corp', color: 'text-primary dark:text-[#8BC6B9]' },
+    { icon: Zap, label: 'EnergyInc', color: 'text-primary dark:text-[#8BC6B9]' },
+    { icon: Code2, label: 'DevSpace', color: 'text-primary dark:text-[#8BC6B9]' },
+    { icon: Rocket, label: 'RocketLab', color: 'text-primary dark:text-[#8BC6B9]' },
+    { icon: Leaf, label: 'GreenTech', color: 'text-primary dark:text-[#8BC6B9]' },
 ];
 
-/* ─── Messages Data ──────────────────────────────────────────────── */
+// messages inbox
 export interface InboxItem {
     id: number;
     name: string;
@@ -99,11 +76,11 @@ export const INBOX: InboxItem[] = [
     { id: 3, name: 'Emily Davis', role: 'Hiring Manager @ Stripe', time: 'Mon', preview: 'Could you share some recent work?', unread: 0, avatar: 'ED' },
 ];
 
-/* ─── Jobs Page Helpers ──────────────────────────────────────────── */
-export const JOB_TYPES = ['Full-time', 'Internship', 'Freelance', 'Volunteer'] as const;
+// jobs page config
+export const JOB_TYPES = ['Full-time', 'Internship', 'Contract', 'Permanent'] as const;
 export const EXPERIENCE_LEVELS = ['Entry level', 'Intermediate', 'Expert'] as const;
-export const SALARY_RANGES = ['Under ₹15L', '₹15L to ₹25L', '₹25L+', 'Contract'] as const;
-export const SORT_OPTIONS = ['Most Relevant', 'Newest First', 'Highest Salary', 'Match Score'] as const;
+export const SALARY_RANGES = ['Under ₹15L', '₹15L to ₹25L', '₹25L+'] as const;
+export const SORT_OPTIONS = ['Featured', 'Role A–Z', 'Highest Salary'] as const;
 export const PAGE_SIZE = 4;
 
 export function parseSalaryRange(salary: string): { min: number; max: number } {
@@ -113,6 +90,6 @@ export function parseSalaryRange(salary: string): { min: number; max: number } {
     return { min: Math.min(...values), max: Math.max(...values) };
 }
 
-export function getMatchScore(seed: string): number {
-    return 80 + (seed.length % 20);
+export function formatSalary(salary: string): string {
+    return salary.replace(/\bINR\s*/gi, '₹').replace(/\s*-\s*/g, ' – ');
 }

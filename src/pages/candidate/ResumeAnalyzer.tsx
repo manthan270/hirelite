@@ -1,29 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, FileText, CheckCircle2, AlertCircle, Sparkles, Lightbulb, ChevronRight } from 'lucide-react';
+import { Upload, FileText, CheckCircle2, AlertCircle, Lightbulb, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const ALLOWED_FILE_EXTENSIONS = new Set(['pdf', 'doc', 'docx']);
 
 export default function ResumeAnalyzer() {
     const [isHovering, setIsHovering] = useState(false);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [results, setResults] = useState<{ score: number; feedback: { type: 'success' | 'warning' | 'info'; text: string }[] } | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
+    const analysisTimeout = useRef<number | null>(null);
+
+    useEffect(() => () => {
+        if (analysisTimeout.current !== null) {
+            window.clearTimeout(analysisTimeout.current);
+        }
+    }, []);
+
+    const startAnalysis = (file: File) => {
+        const extension = file.name.split('.').pop()?.toLowerCase();
+        if (!extension || !ALLOWED_FILE_EXTENSIONS.has(extension)) {
+            toast.error('Choose a PDF, DOC, or DOCX file.');
+            return;
+        }
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            toast.error('Choose a file smaller than 5 MB.');
+            return;
+        }
+        simulateAnalysis(file.name);
+    };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setIsHovering(false);
         const file = e.dataTransfer.files[0];
         if (file) {
-            simulateAnalysis(file.name);
+            startAnalysis(file);
         }
     };
 
     const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            simulateAnalysis(file.name);
+            startAnalysis(file);
         }
+        e.currentTarget.value = '';
     };
 
     const simulateAnalysis = (name: string) => {
@@ -54,30 +78,33 @@ export default function ResumeAnalyzer() {
             selectedFeedback.push(possibleFeedback[(hash + i * 7) % possibleFeedback.length]);
         }
 
-        // Simulate API call processing
-        setTimeout(() => {
+        if (analysisTimeout.current !== null) {
+            window.clearTimeout(analysisTimeout.current);
+        }
+        analysisTimeout.current = window.setTimeout(() => {
             setIsAnalyzing(false);
             setResults({
                 score,
                 feedback: selectedFeedback
             });
+            analysisTimeout.current = null;
         }, 2500);
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
             {/* Header Content */}
-            <div className="text-center space-y-4">
+            <div className="space-y-3 text-center sm:space-y-4">
                 <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto shadow-sm"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-primary/15 bg-white text-primary dark:bg-white/[0.04] dark:text-[#8BC6B9]"
                 >
-                    <Sparkles className="w-8 h-8" />
+                    <FileText className="h-5 w-5" aria-hidden="true" />
                 </motion.div>
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">AI Resume Analyzer</h1>
-                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                    Upload your resume to see how it performs against enterprise Applicant Tracking Systems. Get instant feedback to improve your match rate.
+                <h1 className="text-2xl font-bold text-[#1A211D] dark:text-white sm:text-3xl">Resume Analyzer Preview</h1>
+                <p className="mx-auto max-w-2xl text-base text-[#6B6B73] dark:text-[#8A8A90] sm:text-lg">
+                    This preview does not upload or read your document. It generates illustrative sample feedback from the file name only.
                 </p>
             </div>
 
@@ -86,8 +113,8 @@ export default function ResumeAnalyzer() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`relative group border-2 border-dashed rounded-3xl p-12 transition-all duration-300 bg-white dark:bg-slate-900/50
-              ${isHovering ? 'border-indigo-500 bg-indigo-50/50 dark:bg-indigo-900/20' : 'border-slate-300 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
+                    className={`group relative rounded-2xl border-2 border-dashed bg-white p-6 transition-all duration-300 dark:bg-white/[0.04] sm:rounded-3xl sm:p-10
+              ${isHovering ? 'border-primary bg-primary/[0.04] dark:bg-primary/[0.08]' : 'border-black/[0.08] dark:border-white/[0.08] hover:border-primary/40 dark:hover:border-primary/50 hover:bg-[#F8F6EE] dark:hover:bg-white/[0.06]'}`}
                     onDragOver={(e) => { e.preventDefault(); setIsHovering(true); }}
                     onDragLeave={() => setIsHovering(false)}
                     onDrop={handleDrop}
@@ -98,19 +125,19 @@ export default function ResumeAnalyzer() {
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-                                    className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full mx-auto"
+                                    className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full mx-auto"
                                 />
                                 <div>
-                                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Parsing '{fileName || 'Document'}'...</h3>
-                                    <p className="text-slate-500 dark:text-slate-400">Our AI is extracting key skills and experiences.</p>
+                                    <h3 className="text-lg font-semibold text-[#1A211D] dark:text-white">Preparing sample feedback for '{fileName || 'Document'}'...</h3>
+                                    <p className="text-[#6B6B73] dark:text-[#8A8A90]">No document contents are read or uploaded.</p>
                                 </div>
                             </div>
                         ) : (
                             <>
-                                <Upload className={`w-12 h-12 mx-auto mb-4 transition-colors ${isHovering ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-400'}`} />
-                                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Drag & Drop your resume</h3>
-                                <p className="text-slate-500 dark:text-slate-400 mb-6">Supports PDF, DOCX (Max 5MB)</p>
-                                <Button onClick={() => document.getElementById('resume-upload')?.click()} className="px-8" variant="default">
+                                <Upload className={`w-12 h-12 mx-auto mb-4 transition-colors ${isHovering ? 'text-primary dark:text-[#55A697]' : 'text-[#6B6B73] dark:text-[#8A8A90] group-hover:text-primary dark:group-hover:text-[#55A697]'}`} />
+                                <h3 className="text-lg font-semibold text-[#1A211D] dark:text-white mb-2">Drag & Drop your resume</h3>
+                                <p className="mb-6 text-sm text-[#6B6B73] dark:text-[#8A8A90]">Supports PDF, DOC, or DOCX · Max 5 MB</p>
+                                <Button onClick={() => document.getElementById('resume-upload')?.click()} className="min-h-11 px-8" variant="default">
                                     Browse Files
                                 </Button>
                                 <input
@@ -129,84 +156,80 @@ export default function ResumeAnalyzer() {
             {/* Results Dashboard */}
             {results && (
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl dark:shadow-2xl dark:shadow-indigo-500/10 border border-slate-200 dark:border-slate-800 overflow-hidden relative"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="surface-panel overflow-hidden"
                 >
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-
-                    <div className="grid md:grid-cols-5 gap-0 items-stretch relative z-10">
+                    <div className="grid items-stretch lg:grid-cols-[minmax(200px,0.8fr)_minmax(0,2fr)]">
                         {/* Score Section */}
-                        <div className="md:col-span-2 p-10 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center space-y-6 bg-slate-50/50 dark:bg-slate-800/20">
-                            <h2 className="text-xl font-medium text-slate-600 dark:text-slate-400">Overall ATS Score</h2>
-                            <div className="relative">
-                                <svg className="w-48 h-48 transform -rotate-90">
-                                    <circle cx="96" cy="96" r="84" stroke="currentColor" strokeWidth="16" fill="none" className="text-slate-200 dark:text-slate-800" />
-                                    <motion.circle
-                                        cx="96" cy="96" r="84"
-                                        stroke="url(#score-gradient)"
-                                        strokeWidth="16"
-                                        fill="none"
-                                        strokeDasharray="527.7"
-                                        initial={{ strokeDashoffset: 527.7 }}
-                                        animate={{ strokeDashoffset: 527.7 - (527.7 * results.score) / 100 }}
-                                        transition={{ duration: 1.5, ease: "easeOut" }}
-                                        strokeLinecap="round"
-                                        className="drop-shadow-lg"
-                                    />
-                                    <defs>
-                                        <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stopColor="#818cf8" />
-                                            <stop offset="100%" stopColor="#c084fc" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                                <div className="absolute inset-0 flex items-center justify-center flex-col">
-                                    <span className="text-6xl font-black text-slate-900 dark:text-white tracking-tighter">{results.score}</span>
-                                    <span className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">Score</span>
+                        <div className="flex flex-col justify-center gap-4 border-b border-black/[0.06] bg-[#F8F7F2] p-5 dark:border-white/[0.07] dark:bg-white/[0.02] sm:p-7 lg:border-b-0 lg:border-r">
+                            <div>
+                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6B6B73] dark:text-[#A0A0A8]">Overall ATS score</p>
+                                    <span className="rounded-full border border-primary/15 bg-primary/[0.05] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary dark:border-primary/25 dark:bg-primary/10 dark:text-[#8BC6B9]">Sample</span>
+                                </div>
+                                <div className="mt-3 flex items-baseline gap-2">
+                                    <span className="text-5xl font-semibold leading-none tracking-tight tabular-nums text-[#1A211D] dark:text-white sm:text-6xl">{results.score}</span>
+                                    <span className="text-sm font-medium text-[#6B6B73] dark:text-[#A0A0A8]">/ 100</span>
                                 </div>
                             </div>
-                            <div className="px-5 py-2.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold text-sm border border-emerald-100 dark:border-emerald-500/20 shadow-sm flex items-center gap-2">
-                                <Sparkles className="w-4 h-4" />
-                                Top 15% of Candidates
+                            <div>
+                                <div
+                                    role="progressbar"
+                                    aria-label="Illustrative ATS score"
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={results.score}
+                                    className="h-2 overflow-hidden rounded-full bg-black/[0.08] dark:bg-white/[0.1]"
+                                >
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${results.score}%` }}
+                                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                                        className="h-full rounded-full bg-primary dark:bg-[#8BC6B9]"
+                                    />
+                                </div>
+                                <p className="mt-3 text-sm text-[#6B6B73] dark:text-[#A0A0A8]">Generated from the file name only</p>
                             </div>
                         </div>
 
                         {/* Feedback Section */}
-                        <div className="md:col-span-3 p-10 space-y-8">
-                            <div>
-                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                                    <div className="p-2.5 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400">
-                                        <FileText className="w-6 h-6" />
-                                    </div>
-                                    Detailed Feedback
-                                </h3>
-                                <p className="text-slate-500 dark:text-slate-400 mt-3 text-lg">
-                                    Here's a breakdown of what the AI found in <strong>{fileName || 'your resume'}</strong>. Fix the warnings to increase your score.
-                                </p>
+                        <div className="space-y-5 p-4 sm:p-6 lg:p-7">
+                            <div className="flex items-start gap-3">
+                                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F1EFE6] text-primary dark:bg-white/[0.06] dark:text-[#8BC6B9]">
+                                    <FileText className="h-4 w-4" aria-hidden="true" />
+                                </span>
+                                <div>
+                                    <h3 className="text-xl font-semibold text-[#1A211D] dark:text-white">Detailed feedback</h3>
+                                    <p className="mt-1.5 text-sm leading-relaxed text-[#6B6B73] dark:text-[#A0A0A8]">
+                                        Sample suggestions for <strong className="font-semibold text-[#3D4942] dark:text-[#D4D8D5]">{fileName || 'your file'}</strong>. The document itself is not analyzed.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="grid gap-4">
+                            <div className="grid gap-3 sm:grid-cols-2">
                                 {results.feedback.map((item, index) => {
                                     const config = {
                                         success: {
                                             icon: CheckCircle2,
-                                            color: 'text-emerald-600 dark:text-emerald-400',
-                                            bg: 'bg-emerald-50 dark:bg-emerald-900/20',
-                                            border: 'border-emerald-100 dark:border-emerald-500/20'
+                                            label: 'Strength',
+                                            color: 'text-emerald-700 dark:text-emerald-300',
+                                            bg: 'bg-emerald-50/70 dark:bg-emerald-500/[0.08]',
+                                            border: 'border-emerald-200/70 dark:border-emerald-500/20'
                                         },
                                         warning: {
                                             icon: AlertCircle,
-                                            color: 'text-amber-600 dark:text-amber-400',
-                                            bg: 'bg-amber-50 dark:bg-amber-900/20',
-                                            border: 'border-amber-100 dark:border-amber-500/20'
+                                            label: 'Review',
+                                            color: 'text-amber-700 dark:text-amber-300',
+                                            bg: 'bg-amber-50/70 dark:bg-amber-500/[0.08]',
+                                            border: 'border-amber-200/70 dark:border-amber-500/20'
                                         },
                                         info: {
                                             icon: Lightbulb,
-                                            color: 'text-blue-600 dark:text-blue-400',
-                                            bg: 'bg-blue-50 dark:bg-blue-900/20',
-                                            border: 'border-blue-100 dark:border-blue-500/20'
+                                            label: 'Suggestion',
+                                            color: 'text-primary dark:text-[#8BC6B9]',
+                                            bg: 'bg-primary/[0.05] dark:bg-primary/[0.08]',
+                                            border: 'border-primary/15 dark:border-primary/20'
                                         }
                                     }[item.type];
 
@@ -214,28 +237,33 @@ export default function ResumeAnalyzer() {
 
                                     return (
                                         <motion.div
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.1 }}
+                                            initial={{ opacity: 0, y: 6 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: index * 0.06 }}
                                             key={index}
-                                            className={`flex items-start gap-4 p-5 rounded-2xl border ${config.bg} ${config.border} transition-all hover:scale-[1.01]`}
+                                            className={`flex items-start gap-3 rounded-xl border bg-white p-3 transition-colors dark:bg-white/[0.025] sm:p-3.5 ${config.border}`}
                                         >
-                                            <Icon className={`w-6 h-6 shrink-0 mt-0.5 ${config.color}`} />
-                                            <p className="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">{item.text}</p>
+                                            <span className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${config.bg}`}>
+                                                <Icon className={`h-4 w-4 ${config.color}`} aria-hidden="true" />
+                                            </span>
+                                            <div className="min-w-0">
+                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.08em] ${config.color}`}>{config.label}</p>
+                                                <p className="mt-1 text-sm leading-relaxed text-[#3D4942] dark:text-[#D4D8D5]">{item.text}</p>
+                                            </div>
                                         </motion.div>
                                     );
                                 })}
                             </div>
 
-                            <div className="pt-8 flex flex-col sm:flex-row justify-end gap-4 border-t border-slate-100 dark:border-slate-800">
-                                <Button variant="outline" className="h-12 px-6 rounded-xl font-semibold" onClick={() => { setResults(null); setFileName(null); }}>Analyze Another</Button>
+                            <div className="flex flex-col justify-end gap-3 border-t border-black/[0.06] pt-5 dark:border-white/[0.07] sm:flex-row">
+                                <Button variant="outline" className="min-h-11 rounded-lg px-4 font-semibold" onClick={() => { setResults(null); setFileName(null); }}>Analyze Another</Button>
                                 <Button
                                     variant="default"
-                                    onClick={() => toast('AI Editor coming soon!', { icon: '✨' })}
-                                    className="h-12 px-6 rounded-xl font-semibold group bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 border-0"
+                                    onClick={() => toast('AI Editor coming soon!', { icon: <FileText className="h-4 w-4 text-primary dark:text-[#8BC6B9]" aria-hidden="true" /> })}
+                                    className="group min-h-11 rounded-lg px-4 font-semibold"
                                 >
                                     Improve with AI
-                                    <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                                 </Button>
                             </div>
                         </div>

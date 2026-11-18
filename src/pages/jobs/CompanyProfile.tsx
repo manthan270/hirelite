@@ -1,86 +1,82 @@
 import { motion } from 'framer-motion';
-import { MapPin, Users, Globe, CheckCircle2, Building2, ChevronRight, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, Building2, ChevronRight, ArrowUpRight, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { formatSalary } from '@/lib/constants';
+import { mockJobs } from '@/lib/mockJobs';
 
 const BENEFITS = [
-    "100% Health Coverage",
+    "Health coverage",
     "Unlimited PTO",
-    "401(k) Matching",
+    "Retirement benefits",
     "Remote Workspace Stipend",
     "Annual Learning Budget",
     "Flexible Hours"
 ];
 
-const OPEN_ROLES = [
-    { id: 'techcorp-frontend', title: 'Senior Frontend Developer', location: 'Austin, TX (Hybrid)', salary: '$140k - $170k' },
-    { id: 'techcorp-backend', title: 'Backend Engineer (Go/Rust)', location: 'Remote (US)', salary: '$150k - $190k' },
-    { id: 'techcorp-product', title: 'Product Manager, Platform', location: 'Austin, TX', salary: '$130k - $160k' },
-];
+const OPEN_ROLES = mockJobs.filter((job) => job.company === 'TechCorp Global');
 
 export default function CompanyProfile() {
     return (
-        <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 pb-20 transition-colors">
-            {/* Hero Banner */}
-            <div className="h-[320px] relative overflow-hidden bg-slate-900">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+        <div className="flex-1 bg-[#F8F6EE] dark:bg-[#101310] transition-colors">
+            <div className="relative h-32 overflow-hidden bg-[#171722] dark:bg-[#101017] sm:h-40">
+                <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" />
+                <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/65">Company profile preview</p>
+                </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10">
+            <div className="relative z-10 mx-auto -mt-8 max-w-6xl px-4 pb-16 sm:-mt-10 sm:px-6 lg:px-8">
 
-                {/* Company Header Card */}
+                {/* company header card */}
                 <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 mb-8 flex flex-col md:flex-row gap-8 items-start relative overflow-hidden transition-colors"
+                    className="mb-8 flex flex-col items-start gap-6 rounded-2xl border border-black/[0.07] bg-white p-5 shadow-sm transition-colors dark:border-white/[0.09] dark:bg-[#171B18] sm:p-7 md:flex-row md:gap-7"
                 >
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 dark:bg-indigo-900/20 rounded-full blur-3xl -mr-32 -mt-32 opacity-50"></div>
-
-                    <div className="w-32 h-32 bg-white dark:bg-slate-800 rounded-2xl border-4 border-white dark:border-slate-800 shadow-lg flex items-center justify-center shrink-0 -mt-16 overflow-hidden z-10 bg-gradient-to-br from-indigo-500 to-purple-600">
-                        <span className="text-white font-black text-5xl">T</span>
+                    <div aria-hidden="true" className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-2xl font-bold text-white shadow-sm sm:h-20 sm:w-20 sm:text-3xl">
+                        T
                     </div>
 
-                    <div className="flex-1 w-full z-10">
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
+                    <div className="w-full flex-1">
+                        <div className="mb-5 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
                             <div>
-                                <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <h1 className="text-2xl font-bold text-[#1A211D] dark:text-white sm:text-3xl">
                                     TechCorp Global
-                                    <CheckCircle2 className="w-6 h-6 text-emerald-500" />
                                 </h1>
-                                <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">Building the infrastructure for cloud-native apps</p>
+                                <p className="mt-1 text-sm text-[#62626B] dark:text-[#B5B5BD]">Company details on this page are illustrative.</p>
                             </div>
-                            <div className="flex gap-3 w-full md:w-auto">
-                                <Button variant="outline" className="flex-1 md:flex-none">Save</Button>
-                                <Button className="flex-1 md:flex-none px-8">Follow</Button>
+                            <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
+                                <Button asChild variant="outline" className="w-full md:w-auto">
+                                    <Link to="/jobs">Browse jobs</Link>
+                                </Button>
+                                <Button asChild className="w-full md:w-auto">
+                                    <a href="#open-roles">View {OPEN_ROLES.length} open {OPEN_ROLES.length === 1 ? 'role' : 'roles'} <ArrowUpRight className="ml-2 h-4 w-4" /></a>
+                                </Button>
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-y-4 gap-x-8 text-sm font-medium text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-6">
-                            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500" /> Austin, TX</span>
-                            <span className="flex items-center gap-2"><Users className="w-4 h-4 text-slate-400 dark:text-slate-500" /> 5,000+ Employees</span>
-                            <span className="flex items-center gap-2"><Building2 className="w-4 h-4 text-slate-400 dark:text-slate-500" /> Enterprise Software</span>
-                            <a href="#" className="flex items-center gap-2 text-primary dark:text-indigo-400 hover:underline"><Globe className="w-4 h-4" /> techcorp.io <ExternalLink className="w-3 h-3" /></a>
+                        <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-black/[0.07] pt-4 text-sm font-medium text-[#62626B] dark:border-white/[0.09] dark:text-[#B5B5BD]">
+                            <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" aria-hidden="true" /> Sample location: India</span>
+                            <span className="flex items-center gap-2"><Building2 className="h-4 w-4 text-primary" aria-hidden="true" /> Technology</span>
+                            <span className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-primary" aria-hidden="true" /> {OPEN_ROLES.length} sample open {OPEN_ROLES.length === 1 ? 'role' : 'roles'}</span>
                         </div>
                     </div>
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Main Content */}
+                    {/* main */}
                     <div className="lg:col-span-2 space-y-8">
                         <motion.section
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.1 }}
-                            className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 transition-colors"
+                            className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-sm transition-colors dark:border-white/[0.09] dark:bg-[#171B18] sm:p-7"
                         >
-                            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">About Us</h2>
-                            <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed">
-                                <p>
-                                    TechCorp Global is building the infrastructure for the next generation of cloud-native applications. Our teams tackle some of the hardest scaling problems on the web, securely processing billions of events per day.
-                                </p>
-                                <p>
-                                    We believe in empowering our employees with autonomy and purpose. If you're passionate about distributed systems, elegant frontend interfaces, and open-source software, you'll belong here.
-                                </p>
+                            <h2 className="mb-4 border-b border-black/[0.07] pb-4 text-xl font-bold text-[#1A211D] dark:border-white/[0.09] dark:text-white">About this sample profile</h2>
+                            <div className="prose max-w-none text-[#6B6B73] dark:text-[#8A8A90] leading-relaxed">
+                                <p>This page demonstrates how employer information and open roles can be presented to candidates.</p>
+                                <p>Company description, benefits, and technology examples are sample content and have not been independently verified.</p>
                             </div>
                         </motion.section>
 
@@ -88,44 +84,46 @@ export default function CompanyProfile() {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 transition-colors"
+                            id="open-roles"
+                            className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-sm transition-colors dark:border-white/[0.09] dark:bg-[#171B18] sm:p-7"
                         >
-                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-                                <h2 className="text-xl font-bold text-slate-900 dark:text-white">Open Roles</h2>
-                                <span className="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 font-semibold text-sm rounded-full">{OPEN_ROLES.length} Jobs</span>
+                            <div className="mb-5 flex items-center justify-between gap-3 border-b border-black/[0.07] pb-4 dark:border-white/[0.09]">
+                                <h2 className="text-xl font-bold text-[#1A211D] dark:text-white">Open Roles</h2>
+                                <span className="text-sm font-medium text-[#62626B] dark:text-[#B5B5BD]">{OPEN_ROLES.length} sample</span>
                             </div>
                             <div className="space-y-4">
                                 {OPEN_ROLES.map((job) => (
-                                    <div key={job.id} className="group p-5 border border-slate-100 dark:border-slate-800 rounded-2xl hover:border-primary dark:hover:border-primary hover:shadow-md transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 flex justify-between items-center">
-                                        <div>
-                                            <h3 className="font-bold text-slate-900 dark:text-white text-lg group-hover:text-primary dark:group-hover:text-primary transition-colors">{job.title}</h3>
-                                            <div className="flex gap-4 mt-2 text-sm text-slate-500 dark:text-slate-400 font-medium">
+                                    <Link key={job.id} to={`/jobs/${job.id}`} className="group flex items-center justify-between gap-4 rounded-xl border border-black/[0.08] bg-[#FBFAF8] p-4 transition-colors hover:border-primary/30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-white/[0.1] dark:bg-white/[0.025] dark:hover:bg-white/[0.045] sm:p-5">
+                                        <span className="min-w-0">
+                                            <span className="block truncate font-semibold text-[#1A211D] transition-colors group-hover:text-primary dark:text-white">{job.title}</span>
+                                            <span className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-sm text-[#62626B] dark:text-[#B5B5BD]">
                                                 <span>{job.location}</span>
-                                                <span className="w-1 h-1 bg-slate-300 dark:bg-slate-600 rounded-full my-auto"></span>
-                                                <span className="text-slate-600 dark:text-slate-300">{job.salary}</span>
-                                            </div>
-                                        </div>
-                                        <ChevronRight className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-primary dark:group-hover:text-primary transform group-hover:translate-x-1 transition-all" />
-                                    </div>
+                                                <span>{job.type}</span>
+                                                <span className="font-medium text-[#33333B] dark:text-[#E7E7EA]">{formatSalary(job.salary)}</span>
+                                            </span>
+                                        </span>
+                                        <ChevronRight className="h-5 w-5 shrink-0 text-[#6B6B73] transition-transform group-hover:translate-x-0.5 group-hover:text-primary" aria-hidden="true" />
+                                    </Link>
                                 ))}
+                                {OPEN_ROLES.length === 0 && <p className="text-sm text-[#62626B] dark:text-[#B5B5BD]">There are no sample openings to show right now.</p>}
                             </div>
                         </motion.section>
                     </div>
 
-                    {/* Sidebar Area */}
+                    {/* sidebar */}
                     <div className="space-y-8">
                         <motion.section
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.3 }}
-                            className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 transition-colors"
+                            className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-sm transition-colors dark:border-white/[0.09] dark:bg-[#171B18] sm:p-7"
                         >
-                            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">Benefits & Perks</h2>
+                            <h2 className="mb-5 border-b border-black/[0.07] pb-4 text-lg font-bold text-[#1A211D] dark:border-white/[0.09] dark:text-white">Example benefits</h2>
                             <ul className="space-y-4">
                                 {BENEFITS.map((benefit, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium text-sm">
-                                        <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                                            <CheckCircle2 className="w-4 h-4" />
+                                    <li key={i} className="flex items-center gap-3 text-[#1A211D] dark:text-[#EAEAE8] font-medium text-sm">
+                                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/[0.08] text-primary dark:bg-primary/15 dark:text-[#B7DED5]">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-current" />
                                         </span>
                                         {benefit}
                                     </li>
@@ -137,14 +135,14 @@ export default function CompanyProfile() {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                            className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-transparent dark:border-slate-800 p-1 overflow-hidden relative group transition-colors"
+                            className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-sm transition-colors dark:border-white/[0.09] dark:bg-[#171B18] sm:p-7"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10 dark:opacity-20 group-hover:opacity-20 dark:group-hover:opacity-30 transition-opacity"></div>
-                            <div className="bg-white dark:bg-slate-900 rounded-[22px] p-7 relative z-10 border border-slate-100 dark:border-slate-800 transition-colors">
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-2">Tech Stack</h3>
-                                <div className="flex flex-wrap gap-2 mt-4">
+                            <div>
+                                <h3 className="mb-2 font-bold text-[#1A211D] dark:text-white">Example technologies</h3>
+                                <p className="text-xs text-[#6B6B73] dark:text-[#A0A0A8]">Illustrative tools for this profile preview.</p>
+                                <div className="mt-4 flex flex-wrap gap-2">
                                     {['React', 'TypeScript', 'Node.js', 'Go', 'Kubernetes', 'AWS', 'PostgreSQL'].map(tech => (
-                                        <span key={tech} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg text-xs font-semibold">{tech}</span>
+                                        <span key={tech} className="px-3 py-1.5 bg-[#F1EFE6] dark:bg-white/[0.06] text-[#6B6B73] dark:text-[#EAEAE8] rounded-lg text-xs font-semibold">{tech}</span>
                                     ))}
                                 </div>
                             </div>

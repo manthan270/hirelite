@@ -1,9 +1,6 @@
 import { useState, useCallback } from 'react';
 
-/**
- * Generic hook for toggling items in a set.
- * Replaces duplicate toggle patterns (job types, experience, salary ranges, etc.)
- */
+// toggle items in/out of an array — used for filter chips on the jobs page
 export function useToggleSet<T>(initial: T[] = []) {
     const [items, setItems] = useState<T[]>(initial);
 

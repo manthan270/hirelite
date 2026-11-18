@@ -2,52 +2,50 @@ import { useJobStore } from '@/store/useJobStore';
 import { useApplicationStore } from '@/store/useApplicationStore';
 import { JobCard } from '@/components/jobs/JobCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Briefcase, Users, TrendingUp } from 'lucide-react';
+import { Briefcase, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function EmployerDashboard() {
     const jobs = useJobStore((state) => state.jobs);
     const applications = useApplicationStore((state) => state.applications);
 
-    // Mock employer filter - assuming the logged in employer is "TechCorp Global"
+    // TODO: replace with actual employer filtering once auth has company association
     const companyJobs = jobs.filter(job => job.company === 'TechCorp Global');
 
-    // Calculate actual active jobs and total applicants based on store (plus mocks for realism if needed, but using store for applicants now)
     const totalApplicants = companyJobs.reduce((acc, job) => {
-        // Count applications for this job from the application store
-        const jobApps = applications.filter(app => app.jobId === job.id);
-        return acc + jobApps.length;
-    }, 0); // Start with 0 real applicants from store
+        return acc + applications.filter(app => app.jobId === job.id).length;
+    }, 0);
 
-    // Mock stats mixed with real data
+    const companyApplications = applications.filter((application) =>
+        companyJobs.some((job) => job.id === application.jobId)
+    );
+
     const stats = [
-        { title: 'Total Jobs', value: companyJobs.length, icon: Briefcase, gradient: 'from-blue-500 to-blue-600' },
-        { title: 'Active Jobs', value: companyJobs.length, icon: TrendingUp, gradient: 'from-emerald-500 to-emerald-600' },
-        { title: 'Total Applicants', value: totalApplicants, icon: Users, gradient: 'from-violet-500 to-purple-600' },
+        { title: 'Roles posted', value: companyJobs.length, icon: Briefcase, detail: 'Sample roles in this workspace' },
+        { title: 'Applications received', value: totalApplicants, icon: Users, detail: 'Submitted through the local preview' },
     ];
 
     return (
-        <div className="space-y-8 max-w-6xl mx-auto py-8 px-4">
+        <div className="mx-auto max-w-6xl space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Employer Dashboard</h1>
-                <p className="text-slate-500 dark:text-slate-400 mt-1">Manage your job postings and view applicant stats.</p>
+                <h1 className="editorial-headline text-3xl font-bold tracking-tight text-[#1A211D] dark:text-white">Employer Dashboard</h1>
+                <p className="text-[#62626B] dark:text-[#B5B5BD] mt-1">TechCorp Global preview · role and application data is illustrative.</p>
             </div>
 
-            {/* Stats Row */}
-            <div className="grid gap-6 md:grid-cols-3">
-                {stats.map((stat, index) => {
+            <div className="grid gap-4 md:grid-cols-2">
+                {stats.map((stat) => {
                     const Icon = stat.icon;
                     return (
-                        <Card key={index} className="border-none shadow-soft overflow-hidden relative group hover:-translate-y-1 hover:shadow-glow transition-all duration-300">
-                            <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-100`} />
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-                                <CardTitle className="text-sm font-medium text-white/90">
-                                    {stat.title}
-                                </CardTitle>
-                                <Icon className="h-5 w-5 text-white/80" />
+                        <Card key={stat.title} className="shadow-sm">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium text-[#62626B] dark:text-[#B5B5BD]">{stat.title}</CardTitle>
+                                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/[0.08] text-primary dark:bg-primary/15 dark:text-[#B7DED5]">
+                                    <Icon className="h-4 w-4" aria-hidden="true" />
+                                </span>
                             </CardHeader>
-                            <CardContent className="relative z-10">
-                                <div className="text-3xl font-bold text-white">{stat.value}</div>
-                                <p className="text-xs text-white/70 mt-1 font-medium">Updated just now</p>
+                            <CardContent>
+                                <div className="text-3xl font-bold text-[#1A211D] dark:text-white">{stat.value}</div>
+                                <p className="mt-1 text-xs text-[#6B6B73] dark:text-[#A0A0A8]">{stat.detail}</p>
                             </CardContent>
                         </Card>
                     );
@@ -55,49 +53,51 @@ export default function EmployerDashboard() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Job List Section */}
                 <div className="lg:col-span-2 space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Your Job Postings</h2>
-                    </div>
-
+                            <div className="flex items-center justify-between gap-3">
+                                <h2 className="text-xl font-bold text-[#1A211D] dark:text-white">Your Job Postings</h2>
+                                <span className="text-sm text-[#6B6B73] dark:text-[#A0A0A8]">{companyJobs.length}</span>
+                            </div>
                     <div className="grid gap-4">
                         {companyJobs.length > 0 ? (
                             companyJobs.map((job) => (
                                 <JobCard key={job.id} job={job} />
                             ))
                         ) : (
-                            <div className="text-center py-12 glass-card border-2 border-dashed border-slate-200 dark:border-slate-700/50">
-                                <p className="text-slate-500 dark:text-slate-400 font-medium">You haven't posted any jobs yet.</p>
+                            <div className="text-center py-12 bg-white dark:bg-white/[0.04] rounded-2xl border-2 border-dashed border-black/[0.06] dark:border-white/[0.06]">
+                                <p className="text-[#6B6B73] dark:text-[#8A8A90] font-medium">You haven't posted any jobs yet.</p>
                             </div>
                         )}
                     </div>
                 </div>
 
-                {/* Recent Applicants Feed */}
+                {/* recent applicants */}
                 <div className="space-y-4">
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Recent Applicants</h2>
-                    <Card className="glass-card border-none shadow-soft">
+                    <div className="flex items-center justify-between gap-3">
+                        <h2 className="text-xl font-bold text-[#1A211D] dark:text-white">Recent Applicants</h2>
+                        <span className="text-sm text-[#6B6B73] dark:text-[#A0A0A8]">{companyApplications.length}</span>
+                    </div>
+                    <Card className="shadow-sm">
                         <CardContent className="p-0">
-                            {applications.length > 0 ? (
-                                <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                                    {applications.map((app, i) => {
+                            {companyApplications.length > 0 ? (
+                                <div className="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                                    {companyApplications.map((app) => {
                                         const job = jobs.find(j => j.id === app.jobId);
-                                        if (!job || job.company !== 'TechCorp Global') return null;
+                                        if (!job) return null;
                                         return (
-                                            <div key={i} className="p-4 hover:bg-white/50 dark:hover:bg-slate-800/50 backdrop-blur-sm transition-colors border-b border-slate-100/50 dark:border-slate-800/50 last:border-0 cursor-pointer group">
-                                                <div className="flex justify-between items-start mb-1">
-                                                    <h4 className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">{app.candidateName}</h4>
-                                                    <span className="text-xs text-slate-400 dark:text-slate-500">{app.appliedAt}</span>
+                                            <div key={`${app.jobId}-${app.candidateName}-${app.appliedAt}`} className="p-4 transition-colors hover:bg-[#F8F6EE] dark:hover:bg-white/[0.04]">
+                                                <div className="mb-1 flex items-start justify-between gap-3">
+                                                    <h4 className="font-semibold text-[#1A211D] dark:text-[#EAEAE8]">{app.candidateName}</h4>
+                                                    <span className="shrink-0 text-xs text-[#62626B] dark:text-[#B5B5BD]">{app.appliedAt}</span>
                                                 </div>
-                                                <p className="text-sm text-slate-600 dark:text-slate-400">Applied for <span className="text-primary">{job?.title}</span></p>
+                                                <p className="text-sm text-[#62626B] dark:text-[#B5B5BD]">Applied for <Link to={`/jobs/${job.id}`} className="font-medium text-primary hover:underline dark:text-[#B7DED5]">{job.title}</Link></p>
                                             </div>
                                         );
                                     })}
                                 </div>
                             ) : (
-                                <div className="p-8 text-center text-slate-500 dark:text-slate-400 text-sm">
-                                    No applicants yet.
+                                <div className="p-8 text-center text-[#6B6B73] dark:text-[#8A8A90] text-sm">
+                                    No demo applications yet. When someone submits for an example role, it will appear here.
                                 </div>
                             )}
                         </CardContent>

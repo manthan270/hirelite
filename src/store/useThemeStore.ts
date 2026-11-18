@@ -8,42 +8,32 @@ interface ThemeState {
     setTheme: (theme: Theme) => void;
 }
 
+// this was copy-pasted in two places before — now it's one function
+function applyThemeToDOM(theme: Theme) {
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+
+    if (theme === 'system') {
+        const resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        root.classList.add(resolved);
+    } else {
+        root.classList.add(theme);
+    }
+}
+
 export const useThemeStore = create<ThemeState>()(
     persist(
         (set) => ({
             theme: 'system',
             setTheme: (theme) => {
                 set({ theme });
-                const root = window.document.documentElement;
-                root.classList.remove('light', 'dark');
-
-                if (theme === 'system') {
-                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-                        ? 'dark'
-                        : 'light';
-                    root.classList.add(systemTheme);
-                    return;
-                }
-
-                root.classList.add(theme);
+                applyThemeToDOM(theme);
             },
         }),
         {
             name: 'bg-theme-storage',
             onRehydrateStorage: () => (state) => {
-                // Apply theme immediately on load
-                if (state) {
-                    const root = window.document.documentElement;
-                    root.classList.remove('light', 'dark');
-                    if (state.theme === 'system') {
-                        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-                            ? 'dark'
-                            : 'light';
-                        root.classList.add(systemTheme);
-                    } else {
-                        root.classList.add(state.theme);
-                    }
-                }
+                if (state) applyThemeToDOM(state.theme);
             }
         }
     )

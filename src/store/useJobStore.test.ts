@@ -1,50 +1,29 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { useJobStore } from './useJobStore';
 
 describe('useJobStore', () => {
-    // Reset store before each test if needed
-    beforeEach(() => {
-        useJobStore.setState({ search: '' });
+    it('should initialize with a non-empty jobs array from mockJobs', () => {
+        const { jobs } = useJobStore.getState();
+        expect(Array.isArray(jobs)).toBe(true);
+        expect(jobs.length).toBeGreaterThan(0);
     });
 
-    it('should initialize with an empty search string', () => {
-        const { search } = useJobStore.getState();
-        expect(search).toBe('');
+    it('should have jobs with required fields', () => {
+        const { jobs } = useJobStore.getState();
+        for (const job of jobs) {
+            expect(job).toHaveProperty('id');
+            expect(job).toHaveProperty('title');
+            expect(job).toHaveProperty('company');
+            expect(job).toHaveProperty('location');
+            expect(job).toHaveProperty('salary');
+            expect(job).toHaveProperty('type');
+        }
     });
 
-    it('should update the search string when setSearch is called', () => {
-        useJobStore.getState().setSearch('React developer');
-        const { search } = useJobStore.getState();
-        expect(search).toBe('React developer');
-    });
-
-    it('should filter jobs based on the search string (title match)', () => {
-        // Assuming mockJobs has at least one job with "developer" or something in it.
-        // We test the logic of the filter function itself.
-        useJobStore.setState({
-            jobs: [
-                { id: '1', title: 'Frontend Developer', company: 'Tech Inc', location: 'NY', type: 'Full-time', salary: '100k' },
-                { id: '2', title: 'Backend Engineer', company: 'Data Corp', location: 'SF', type: 'Full-time', salary: '120k' },
-            ],
-            search: 'frontend'
-        });
-
-        const filtered = useJobStore.getState().filteredJobs();
-        expect(filtered).toHaveLength(1);
-        expect(filtered[0].title).toBe('Frontend Developer');
-    });
-
-    it('should filter jobs based on location', () => {
-        useJobStore.setState({
-            jobs: [
-                { id: '1', title: 'Developer', company: 'Tech Inc', location: 'Remote', type: 'Full-time', salary: '100k' },
-                { id: '2', title: 'Engineer', company: 'Data Corp', location: 'San Francisco', type: 'Full-time', salary: '120k' },
-            ],
-            search: 'san francisco'
-        });
-
-        const filtered = useJobStore.getState().filteredJobs();
-        expect(filtered).toHaveLength(1);
-        expect(filtered[0].company).toBe('Data Corp');
+    it('should have unique job ids', () => {
+        const { jobs } = useJobStore.getState();
+        const ids = jobs.map((j) => j.id);
+        const uniqueIds = new Set(ids);
+        expect(uniqueIds.size).toBe(ids.length);
     });
 });

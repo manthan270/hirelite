@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, DollarSign, Clock, Bookmark, TrendingUp } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { MapPin, Clock, Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { getMatchScore } from '@/lib/constants';
+import { formatSalary } from '@/lib/constants';
 import type { Job } from '@/types/job';
 
 interface JobListingCardProps {
@@ -14,59 +13,54 @@ interface JobListingCardProps {
 }
 
 export const JobListingCard = React.memo(function JobListingCard({ job, isSaved, onSaveToggle, viewMode }: JobListingCardProps) {
-    const matchScore = getMatchScore(job.id + job.title);
-    const isHighMatch = matchScore >= 90;
-
     return (
-        <div className={`group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/40 hover:shadow-lg transition-all duration-300 ${viewMode === 'list' ? 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5' : 'flex flex-col p-6'}`}>
-            <div className={`flex gap-4 ${viewMode === 'grid' ? 'flex-col' : ''}`}>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-purple-500/10 dark:from-primary/20 dark:to-purple-500/20 flex items-center justify-center text-lg font-bold text-primary dark:text-indigo-400 shrink-0 border border-primary/10 dark:border-primary/20">
+        <article className={`surface-panel group transition-colors duration-200 hover:border-primary/25 hover:shadow-md dark:hover:border-primary/35 ${viewMode === 'list' ? 'flex flex-col gap-5 p-4 sm:p-5 md:flex-row md:items-center md:justify-between md:p-6' : 'flex flex-col p-4 sm:p-5 md:p-6'}`}>
+            <div className={`flex min-w-0 gap-4 ${viewMode === 'grid' ? 'flex-col' : ''}`}>
+                <div aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/10 bg-primary/[0.06] text-lg font-bold text-primary dark:border-primary/20 dark:bg-primary/[0.12]">
                     {job.company.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                        <Link to={`/jobs/${job.id}`} className="font-bold text-slate-900 dark:text-white hover:text-primary dark:hover:text-indigo-400 transition-colors truncate">
+                    <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                        <Link to={`/jobs/${job.id}`} className="rounded-sm font-semibold text-[#1A211D] transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-white">
                             {job.title}
                         </Link>
-                        {job.verified && (
-                            <span className="flex items-center text-primary text-[10px] bg-primary/5 dark:bg-primary/10 px-1.5 py-0.5 rounded-full font-semibold shrink-0">✓ Verified</span>
-                        )}
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium truncate">{job.company}</p>
+                    <p className="text-sm text-[#6B6B73] dark:text-[#8A8A90] font-medium truncate">{job.company}</p>
 
-                    <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-500 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {job.location}</span>
-                        <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> {job.salary}</span>
-                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {job.type}</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mt-3">
-                        <Badge variant="secondary" className="text-[11px]">{job.type}</Badge>
-                        <div className={`flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full ${isHighMatch ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'}`}>
-                            <TrendingUp className="w-3 h-3" /> {matchScore}% Match
-                        </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[#62626B] dark:text-[#A0A0A8]">
+                        <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4 text-[#85858D]" aria-hidden="true" />{job.location}</span>
+                        <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4 text-[#85858D]" aria-hidden="true" />{job.type}</span>
+                        <span>{job.experienceLevel}</span>
                     </div>
                 </div>
             </div>
 
-            <div className={`flex items-center gap-2 ${viewMode === 'list' ? 'shrink-0' : 'mt-4 pt-4 border-t border-slate-100 dark:border-slate-800'}`}>
-                <Button
-                    asChild
-                    size="sm"
-                    className="bg-primary hover:bg-primary/90 text-white rounded-xl flex-1 sm:flex-none"
-                >
-                    <Link to={`/jobs/${job.id}`}>View Details</Link>
-                </Button>
-                <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onSaveToggle(job.id)}
-                    className={`rounded-xl border-slate-200 dark:border-slate-700 ${isSaved ? 'text-primary dark:text-indigo-400' : 'text-slate-400 hover:text-primary dark:hover:text-indigo-400'} transition-colors`}
-                >
-                    <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
-                </Button>
+            <div className={`flex items-center gap-3 ${viewMode === 'list' ? 'justify-between border-t border-black/[0.05] pt-4 dark:border-white/[0.07] md:shrink-0 md:justify-end md:border-0 md:pt-0' : 'mt-4 justify-between border-t border-black/[0.05] pt-4 dark:border-white/[0.07] sm:mt-5'}`}>
+                <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B6B73] dark:text-[#A0A0A8]">Example salary</p>
+                    <p className="mt-0.5 whitespace-nowrap text-sm font-semibold tabular-nums text-[#282832] dark:text-[#E7E7EA]">{formatSalary(job.salary)}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Button
+                        asChild
+                        size="sm"
+                        className="rounded-lg bg-primary text-white hover:bg-primary-dark"
+                    >
+                        <Link to={`/jobs/${job.id}`}>View role</Link>
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        onClick={() => onSaveToggle(job.id)}
+                        aria-label={isSaved ? `Remove ${job.title} from saved jobs` : `Save ${job.title}`}
+                        aria-pressed={isSaved}
+                        className={`h-9 w-9 rounded-xl border-black/[0.07] dark:border-white/[0.08] ${isSaved ? 'text-primary dark:text-[#B7DED5]' : 'text-[#62626B] dark:text-[#A0A0A8] hover:text-primary'} transition-colors`}
+                    >
+                        <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} aria-hidden="true" />
+                    </Button>
+                </div>
             </div>
-        </div>
+        </article>
     );
 });

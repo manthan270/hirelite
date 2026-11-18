@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
@@ -7,7 +8,7 @@ import { Home } from '@/pages/Home';
 import { useAuthStore } from '@/store/useAuthStore';
 import { Toaster } from 'react-hot-toast';
 
-/* ─── Lazy-loaded pages (route-level code splitting) ──────────── */
+// route-level code splitting
 const Jobs = lazy(() => import('@/pages/candidate/Jobs'));
 const JobDetail = lazy(() => import('@/pages/candidate/JobDetail').then(m => ({ default: m.JobDetail })));
 const ResumeAnalyzer = lazy(() => import('@/pages/candidate/ResumeAnalyzer'));
@@ -32,28 +33,27 @@ function PageLoader() {
     );
 }
 
-function AppContent() {
+// the old code had `App` wrapping `AppContent` for no reason — just export directly
+export default function App() {
     const [searchParams] = useSearchParams();
     const login = useAuthStore((state) => state.login);
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const user = useAuthStore((state) => state.user);
 
+    // Demo shortcuts are available only on the local development server.
     useEffect(() => {
-        if (isAuthenticated) return;
+        if (!import.meta.env.DEV || isAuthenticated) return;
         const demoRole = searchParams.get('demo');
-        if (demoRole === 'candidate') {
-            login('demo@candidate.com', 'candidate');
-        } else if (demoRole === 'employer') {
-            login('demo@employer.com', 'employer');
-        }
+        if (demoRole === 'candidate') login('demo@candidate.com', 'candidate');
+        else if (demoRole === 'employer') login('demo@employer.com', 'employer');
     }, [searchParams, login, isAuthenticated]);
 
     return (
-        <>
+        <MotionConfig reducedMotion="user">
             <Toaster position="top-right" />
             <Suspense fallback={<PageLoader />}>
                 <Routes>
-                    {/* Public Routes - Wrapped in MainLayout */}
+                    {/* public */}
                     <Route element={<MainLayout />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/jobs" element={<Jobs />} />
@@ -63,49 +63,40 @@ function AppContent() {
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/coming-soon" element={<ComingSoon />} />
-
-                        {/* Redirects */}
                         <Route path="/post-job" element={<Navigate to="/dashboard/employer" replace />} />
                     </Route>
 
-                    {/* Protected Routes */}
+                    {/* protected — requires auth */}
                     <Route element={<ProtectedRoute />}>
                         <Route element={<DashboardLayout />}>
-                            <Route path="/dashboard/candidate" element={<CandidateDashboard />} />
-                            <Route path="/dashboard/employer" element={<EmployerDashboard />} />
-                            <Route path="/dashboard/resume-analyzer" element={<ResumeAnalyzer />} />
+                            <Route element={<ProtectedRoute allowedRoles={['candidate']} />}>
+                                <Route path="/dashboard/candidate" element={<CandidateDashboard />} />
+                                <Route path="/dashboard/resume-analyzer" element={<ResumeAnalyzer />} />
+                                <Route path="/dashboard/candidate/applications" element={<MyApplications />} />
+                                <Route path="/dashboard/candidate/saved" element={<SavedJobs />} />
+                                <Route path="/dashboard/candidate/*" element={<div className="text-[#6B6B73] dark:text-[#8A8A90] p-8">Section Coming Soon</div>} />
+                            </Route>
+                            <Route element={<ProtectedRoute allowedRoles={['employer']} />}>
+                                <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+                                <Route path="/dashboard/employer/*" element={<div className="text-[#6B6B73] dark:text-[#8A8A90] p-8">Section Coming Soon</div>} />
+                            </Route>
                             <Route path="/dashboard/messages" element={<Messages />} />
-                            <Route path="/dashboard/candidate/applications" element={<MyApplications />} />
-                            <Route path="/dashboard/candidate/saved" element={<SavedJobs />} />
-                            {/* Placeholder for nested dashboard routes */}
-                            <Route path="/dashboard/candidate/*" element={<div className="text-slate-500 p-8">Section Coming Soon</div>} />
-                            <Route path="/dashboard/employer/*" element={<div className="text-slate-500 p-8">Section Coming Soon</div>} />
                         </Route>
                     </Route>
 
-                    {/* Auth routes */}
+                    {/* auth */}
                     <Route path="/login" element={
-                        isAuthenticated ? (
-                            <Navigate to={user?.role === 'employer' ? '/dashboard/employer' : '/dashboard/candidate'} />
-                        ) : (
-                            <Login />
-                        )
+                        isAuthenticated
+                            ? <Navigate to={user?.role === 'employer' ? '/dashboard/employer' : '/dashboard/candidate'} />
+                            : <Login />
                     } />
                     <Route path="/register" element={
-                        isAuthenticated ? (
-                            <Navigate to={user?.role === 'employer' ? '/dashboard/employer' : '/dashboard/candidate'} />
-                        ) : (
-                            <Register />
-                        )
+                        isAuthenticated
+                            ? <Navigate to={user?.role === 'employer' ? '/dashboard/employer' : '/dashboard/candidate'} />
+                            : <Register />
                     } />
                 </Routes>
             </Suspense>
-        </>
+        </MotionConfig>
     );
 }
-
-function App() {
-    return <AppContent />;
-}
-
-export default App;

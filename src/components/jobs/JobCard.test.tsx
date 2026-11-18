@@ -17,7 +17,8 @@ const mockJob: import('@/types/job').Job = {
     company: 'Tech Innovators',
     location: 'Remote',
     type: 'Full-time',
-    salary: '$130k - $160k',
+    salary: '₹18L - ₹25L',
+    experienceLevel: 'Expert',
     verified: true
 };
 
@@ -43,7 +44,7 @@ describe('JobCard Component', () => {
         expect(screen.getByText('Senior Frontend Engineer')).toBeInTheDocument();
         expect(screen.getByText('Tech Innovators')).toBeInTheDocument();
         expect(screen.getByText('Remote')).toBeInTheDocument();
-        expect(screen.getByText('$130k - $160k')).toBeInTheDocument();
+        expect(screen.getByText('₹18L - ₹25L')).toBeInTheDocument();
         expect(screen.getByText('Full-time')).toBeInTheDocument();
         expect(screen.getByText('Verified')).toBeInTheDocument(); // Verified Badge
     });

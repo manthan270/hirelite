@@ -21,7 +21,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     <input
                         type={type}
                         className={cn(
-                            "flex h-12 w-full rounded-lg border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-white/[0.04] px-4 py-2 text-[15px] text-[#1A1A1F] dark:text-[#EAEAE8] ring-offset-white dark:ring-offset-[#0A0A0F] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#6B6B73] dark:placeholder:text-[#8A8A90] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#5B4CDB] focus-visible:border-[#5B4CDB] focus-visible:bg-white dark:focus-visible:bg-white/[0.06] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50",
+                            "flex h-12 w-full rounded-lg border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-white/[0.04] px-4 py-2 text-[15px] text-[#1A211D] dark:text-[#EAEAE8] ring-offset-white dark:ring-offset-[#101310] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#6B6B73] dark:placeholder:text-[#8A8A90] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1F766A] focus-visible:border-[#1F766A] focus-visible:bg-white dark:focus-visible:bg-white/[0.06] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50",
                             startIcon ? "pl-11" : "",
                             endIcon ? "pr-11" : "",
                             className

@@ -1,27 +1,29 @@
 import { create } from 'zustand';
 
+export type UserRole = 'candidate' | 'employer';
+
 interface User {
     id: string;
     name: string;
     email: string;
-    role: 'candidate' | 'employer';
+    role: UserRole;
 }
 
 interface AuthState {
     user: User | null;
     isAuthenticated: boolean;
-    login: (email: string, role: 'candidate' | 'employer') => void;
+    login: (email: string, role: UserRole, name?: string) => void;
     logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     isAuthenticated: false,
-    login: (email, role) => {
-        // Mock login logic
+    login: (email, role, name) => {
+        // This store is only a local development preview; production auth must be server-backed.
         const mockUser: User = {
             id: '1',
-            name: email.split('@')[0] || 'User', // Use email prefix as name
+            name: name?.trim() || email.split('@')[0] || 'User',
             email,
             role,
         };
