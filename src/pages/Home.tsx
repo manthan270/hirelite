@@ -8,8 +8,8 @@ export function Home() {
     return (
         <>
             <HeroSection />
-            <ComparisonSection />
             <TrustedBySection />
+            <ComparisonSection />
             <CategoriesSection />
             <NewsletterSection />
         </>

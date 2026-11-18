@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent, type PointerEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Briefcase, IndianRupee, ListFilter, MapPin, Search } from 'lucide-react';
@@ -9,8 +9,22 @@ const QUICK_SEARCHES = ['Frontend', 'Product', 'Data Scientist'];
 
 export function HeroSection() {
     const navigate = useNavigate();
+    const gridRef = useRef<HTMLDivElement>(null);
     const [keyword, setKeyword] = useState('');
     const [location, setLocation] = useState('');
+
+    const handleHeroPointerMove = (event: PointerEvent<HTMLElement>) => {
+        if (event.pointerType === 'touch' || !gridRef.current) return;
+
+        const bounds = event.currentTarget.getBoundingClientRect();
+        gridRef.current.style.setProperty('--cursor-x', `${event.clientX - bounds.left}px`);
+        gridRef.current.style.setProperty('--cursor-y', `${event.clientY - bounds.top}px`);
+    };
+
+    const hideHeroGrid = () => {
+        gridRef.current?.style.setProperty('--cursor-x', '-1000px');
+        gridRef.current?.style.setProperty('--cursor-y', '-1000px');
+    };
 
     const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,7 +38,11 @@ export function HeroSection() {
     const searchFor = (term: string) => navigate(`/jobs?q=${encodeURIComponent(term)}`);
 
     return (
-        <section className="relative isolate overflow-hidden bg-[#F8F6EE] dark:bg-[#101310] transition-colors duration-300">
+        <section
+            onPointerMove={handleHeroPointerMove}
+            onPointerLeave={hideHeroGrid}
+            className="relative isolate overflow-hidden bg-[#F8F6EE] dark:bg-[#101310] transition-colors duration-300"
+        >
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 opacity-80 dark:opacity-100"
@@ -35,8 +53,13 @@ export function HeroSection() {
                     `,
                 }}
             />
+            <div
+                ref={gridRef}
+                aria-hidden="true"
+                className="hero-grid-pattern pointer-events-none absolute inset-0 z-0 opacity-70 dark:opacity-60"
+            />
 
-            <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+            <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
                 <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-16">
                     <motion.div
                         initial={{ opacity: 0, y: 14 }}
@@ -63,7 +86,7 @@ export function HeroSection() {
                             onSubmit={handleSearchSubmit}
                             role="search"
                             aria-label="Search sample jobs"
-                            className="glass-card mt-8 grid gap-0 bg-white/75 p-2.5 backdrop-blur-xl dark:bg-[#171B18]/80 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_auto] md:items-center md:p-3"
+                            className="glass-card mt-8 grid gap-0 border-black/[0.08] bg-white/95 p-2.5 shadow-[0_18px_50px_-32px_rgba(15,23,20,0.24)] backdrop-blur-xl dark:border-white/[0.10] dark:bg-[#191F1B]/95 dark:shadow-[0_24px_50px_-28px_rgba(0,0,0,0.48)] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_auto] md:items-center md:p-3"
                         >
                             <div className="min-w-0 px-3 py-1.5 md:px-4">
                                 <label htmlFor="hero-search-keyword" className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B6B73] dark:text-[#A0A0A8]">
@@ -135,7 +158,7 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
                         className="relative mx-auto w-full max-w-xl"
                     >
-                        <div className="glass-card relative overflow-hidden rounded-[1.5rem] shadow-[0_24px_64px_-42px_rgba(20,20,35,0.35)]">
+                        <div className="glass-card relative overflow-hidden rounded-[1.5rem] bg-white/90 shadow-[0_24px_64px_-42px_rgba(20,20,35,0.35)] dark:bg-[#171B18]/92">
                             <div className="relative h-40 overflow-hidden sm:h-44">
                                 <img
                                     src="/hirelite-workplace-hero.png"

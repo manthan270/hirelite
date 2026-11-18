@@ -154,6 +154,30 @@ html.lenis, html.lenis body {
     background-color: #1F766A;
   }
 
+  /* Grid lines are revealed in a soft spotlight around the mouse. */
+  .hero-grid-pattern {
+    --cursor-x: -1000px;
+    --cursor-y: -1000px;
+    color: rgba(27, 94, 84, 0.26);
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(circle 210px at var(--cursor-x) var(--cursor-y), rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.72) 58%, transparent 100%);
+    mask-image: radial-gradient(circle 210px at var(--cursor-x) var(--cursor-y), rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.72) 58%, transparent 100%);
+  }
+
+  .dark .hero-grid-pattern {
+    color: rgba(93, 109, 101, 0.34);
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .hero-grid-pattern {
+      -webkit-mask-image: radial-gradient(ellipse 85% 70% at 92% 10%, rgba(0, 0, 0, 0.36), transparent 100%);
+      mask-image: radial-gradient(ellipse 85% 70% at 92% 10%, rgba(0, 0, 0, 0.36), transparent 100%);
+    }
+  }
+
   .dark .salary-range-track {
     background-color: rgba(255, 255, 255, 0.18);
   }
