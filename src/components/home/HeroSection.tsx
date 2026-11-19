@@ -56,7 +56,7 @@ export function HeroSection() {
             <div
                 ref={gridRef}
                 aria-hidden="true"
-                className="hero-grid-pattern pointer-events-none absolute inset-0 z-0 opacity-70 dark:opacity-60"
+                className="hero-grid-pattern pointer-events-none absolute inset-0 z-0 opacity-90 dark:opacity-80"
             />
 
             <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
